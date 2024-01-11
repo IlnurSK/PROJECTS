@@ -20,7 +20,6 @@
 [Populating the Page: How Browsers Work](https://developer.mozilla.org/en-US/docs/Web/Performance/How_browsers_work)
 
 ## DNS
-
 [What is DNS?](https://www.cloudflare.com/en-gb/learning/dns/what-is-dns/)
 
 [DNS and How does it Work?](https://roadmap.sh/backend#:~:text=DNS%20and%20How%20does%20it%20Work%3F)
@@ -30,7 +29,17 @@
 [Complete DNS mini-series](https://www.youtube.com/watch?v=zEmUuNFBgN8&list=PLTk5ZYSbd9MhMmOiPhfRJNW7bhxHo4q-K)
 
 ## Domain Name
-
 [What is a Domain Name?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/What_is_a_domain_name)
 
 [A Beginners Guide to How Domain Names Work](https://www.youtube.com/watch?v=Y4cRx19nhJk)
+
+## Hosting
+[What Is Web Hosting? Explained](https://www.youtube.com/watch?v=htbY9-yggB0)
+
+[Different Types of Web Hosting Explained](https://www.youtube.com/watch?v=AXVZYzw8geg)
+
+[Where to Host a Fullstack Project on a Budget](https://www.youtube.com/watch?v=Kx_1NYYJS7Q)
+
+[What is the difference between webpage, website, web server, and search engine?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/Pages_sites_servers_and_search_engines)
+
+[What is a web server?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server)

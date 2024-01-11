@@ -18,3 +18,13 @@
 [How Browsers Work](https://www.html5rocks.com/en/tutorials/internals/howbrowserswork/)
 
 [Populating the Page: How Browsers Work](https://developer.mozilla.org/en-US/docs/Web/Performance/How_browsers_work)
+
+## DNS
+
+[What is DNS?]([url](https://www.cloudflare.com/en-gb/learning/dns/what-is-dns/)https://www.cloudflare.com/en-gb/learning/dns/what-is-dns/)
+
+[DNS and How does it Work?]([url](https://roadmap.sh/backend#:~:text=DNS%20and%20How%20does%20it%20Work%3F)https://roadmap.sh/backend#:~:text=DNS%20and%20How%20does%20it%20Work%3F)
+
+[DNS Records]([url](https://www.youtube.com/watch?v=7lxgpKh_fRY)https://www.youtube.com/watch?v=7lxgpKh_fRY)
+
+[Complete DNS mini-series]([url](https://www.youtube.com/watch?v=zEmUuNFBgN8&list=PLTk5ZYSbd9MhMmOiPhfRJNW7bhxHo4q-K)https://www.youtube.com/watch?v=zEmUuNFBgN8&list=PLTk5ZYSbd9MhMmOiPhfRJNW7bhxHo4q-K)

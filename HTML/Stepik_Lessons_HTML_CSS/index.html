@@ -1,20 +1,169 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STEPIK LESSONS HTML/CSS</title>
 </head>
+
 <body>
     <a href="https://vk.com/itc.digital">ITC Вконтакте</a><br>
     <a href="https://vk.com/itc.digital" target="_blank">ITC Вконтакте</a><br>
     <button disabled>Нельзя нажимать</button><br>
-    <img
-    src="http://example.com/cat.jpg"
-    title="Мурка"
-    alt="Рыжая кошка валяется в снегу"
-    width="640"
-     height="480"
-    >
+    <img src="https://sun9-58.userapi.com/impg/sKHJErV68b4t6FISD-sH3QQg6SlGIf1-NaQb_w/lL4imseCq3U.jpg?size=807x807&quality=96&sign=6b7e3214e5aa67d3f61253459a6f86fc&c_uniq_tag=8KbZ9yUj5NU7m9oyno7fdCjDB0qzmt-MJ94HTm7-_F0&type=album"
+        title="Мурка" alt="Рыжая кошка валяется в снегу" width="640" height="480"><br>
+    Список ингредиентов:
+    <ul>
+         <li>Картошка</li>
+         <li>Морковка</li>
+         <li>Свекла</li>
+    </ul>
+    Инструкция по приготовлению:
+    <ol>
+         <li>Довести воду до кипения</li>
+         <li>Засыпать ингредиенты</li>
+         <li>Варить 10 минут</li>
+    </ol>
+    <dl>
+         <dt>Гаспачо</dt>
+        <dd>лёгкий холодный суп из перетёртых в пюре свежих овощей</dd>
+         <dt>Том-ям</dt>
+        <dd>кисло-острый суп на основе куриного бульона с креветками, курицей, рыбой или другими морепродуктами</dd>
+         <dt>Борщ</dt>
+        <dd>разновидность супа на основе свёклы, которая придаёт борщу характерный красный цвет</dd>
+    </dl>
+    Вложенный список:
+    <ul>
+        <li>Омлет
+            <ul>
+                <li>Молоко</li>
+                <li>Яйца</li>
+            </ul>
+        </li>
+        <li>Блинчики
+            <ul>
+                <li>Молоко</li>
+                <li>Яйца</li>
+                <li>Мука</li>
+                <li>Сахар</li>
+                <li>Соль</li>
+                <li>Разрыхлитель</li>
+            </ul>
+        </li>
+        <li>Торт</li>
+        <li>Пирог</li>
+    </ul>
+    <figure>
+        <img src="https://www.google.ru/images/branding/googlelogo/2x/googlelogo_color_120x44dp.png">
+        <figcaption>
+            Лого гугла от 2015 года
+        </figcaption>
+    </figure>
+
+    <h1 id="anchor">Якорь</h1>
+    <a href="#anchor">Перейти к якорю</a>
+
+    <table border="1">
+        <tr>
+            <th>Имя</th>
+            <th>Возраст</th>
+            <th>Суперспособность</th>
+        </tr>
+        <tr>
+            <td>Логан</td>
+            <td>186</td>
+            <td>Повышенная способность к регенерации</td>
+        </tr>
+        <tr>
+            <td>Профессор икс</td>
+                  <td>94</td>
+            <td>Чтение мыслей, вызов иллюзий, временного паралича, способность останавливать время</td>
+        </tr>
+    </table>
+    <table border="4">
+        <caption>Сотрудники отдела поддержки</caption>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Должность</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Петя</td>
+                <td>Менеджер</td>
+            </tr>
+            <tr>
+                <td>Маша</td>
+                <td>Разработчик</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Вася</td>
+                <td>Девопс</td>
+            </tr>
+        </tfoot>
+    </table>
+    <table border="1">
+        <tr>
+            <td>Первая ячейка</td>
+            <td>Вторая ячейка</td>
+            <td>Третья ячейка</td>
+        </tr>
+        <tr>
+            <td colspan="3">Единственная ячейка</td>
+        </tr>
+    </table>
+    <table border="1">
+        <tr>
+            <td rowspan="2">Левая ячейка</td>
+            <td>Верхняя ячейка</td>
+        </tr>
+        <tr>
+            <td>Нижняя ячейка</td>
+        </tr>
+    </table>
+    <table border="1">
+        <tr>
+            <td rowspan="2">Левая ячейка</td>
+            <td>Средняя ячейка</td>
+            <td>Правая ячейка</td>
+        </tr>
+        <tr>
+            <td colspan="2">Нижняя ячейка</td>
+        </tr>
+    </table>
+    <form name="f1" method="get" action="enter_data.php">
+        <input name="link" type="hidden" value="index.php" />
+        Логин: <br />
+        <input name="login" type="text" size="25" maxlength="30" value="Вася" /> <br />
+        Пароль: <br />
+        <input name="pd" type="password" size="25" maxlength="30" value="" /> <br />
+        <input name="remember" type="checkbox" value="yes" /> Запомнить <br />
+        <input type="submit" name="enter" value="Вход" /> <br>
+        Ваш пол: <br>
+        <input type="radio" name="gender" value="male" checked> Мужской<br>
+        <input type="radio" name="gender" value="female"> Женский<br>
+        <input type="radio" name="gender" value="other"> Другой<br>
+        <input type="file"> загрузить фото<br>
+        <input type="reset"> сбросить <br>
+        <input type="submit"> подвердить <br>
+        <button>Just a button</button><br>
+        <select size="3" multiple name="herou">
+            <option disabled>выберите героя</option>
+            <option selected value="человек паук">человек паук</option>
+            <option value="бэтмен">бэтмен</option>
+            <option value="халк">халк</option>
+            <option value="тарзан">тарзан</option><br />
+            <p><input type="submit" value="отправить" /></p>
+        </select>
+        <input type="email"> Ваш email <br>
+        <input type="tel"> Ваш контактный телефон <br>
+        <input type="url"> Ссылка на ваши соцсети <br>
+        <input type="search"> search <br>
+    </form>
 </body>
+
 </html>

@@ -1,0 +1,47 @@
+body {
+  background: #ddd;
+  display: flex;
+  flex-wrap: wrap;
+  font-family: sans-serif;
+}
+
+.block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  margin: 16px;
+  background: #fff;
+  font-size: 32px;
+}
+
+.html-color {
+  background-color: lightyellow;
+}
+
+.hex-color {
+  background-color: #3ee5c9;
+}
+
+.rgb-color {
+  background-color: rgb(190, 66, 73);
+}
+
+.rgba-color {
+  background-color: rgba(190, 66, 73, 50%);
+}
+
+.hsl-color {
+  background-color: hsl(119, 48.8%, 50.2%);
+}
+
+.hsla-color {
+  background-color: hsla(119, 48.8%, 50.2%, 50%);
+}
+
+.image {
+  background: url(Torta\ Chiffon.jpg);
+  background-position: center;
+  background-size: auto 100%;
+}

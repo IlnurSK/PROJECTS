@@ -1,0 +1,21 @@
+h1 {
+  color: blue;
+  font-weight: 400;
+  font-size: 42px;
+}
+
+p {
+  color: #222;
+  font-family: "Arial", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+blockquote {
+  color: #222;
+  font-family: "Arial", sans-serif;
+  font-size: 24px;
+  line-height: 24px;
+  font-style: italic;
+  color: blue;
+}

@@ -1,5 +1,5 @@
 body {
-  margin:auto;
+  margin: auto;
   width: 70%;
 }
 
@@ -26,4 +26,8 @@ figcaption {
 
 figure {
   float: right;
+}
+
+div {
+  clear: both;
 }

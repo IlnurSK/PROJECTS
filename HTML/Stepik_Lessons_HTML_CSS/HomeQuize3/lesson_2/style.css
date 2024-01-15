@@ -1,0 +1,12 @@
+.post {
+  margin: 20px auto;
+  width: 550px;
+}
+
+.post__header {
+  padding: 15px 20px 0px;
+}
+
+.post__content {
+  padding: 20px 20px 0px;
+}

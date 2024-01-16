@@ -1,0 +1,128 @@
+/* header {
+  background-color: #007765;
+}
+.container {
+  width: 100%;
+  max-width: 1219px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.logo {
+  float: left;
+  height: 46px;
+}
+
+nav {
+  float: right;
+  margin: 0 auto;
+}
+
+nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+nav li {
+  display: inline-block; 
+}
+
+.container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+nav a {
+  text-decoration: none;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  line-height: 46px;
+  padding: 0px 4px;
+}
+
+.jumbotron {
+  background-image: url("images/Jumotron.png");
+  background-size: cover;
+}
+
+.jumbotron > p {
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-size: 72px;
+} */
+body {
+  font-family: "Roboto", sans-serif; 
+  font-style: normal;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: normal;
+  color: #000000;
+}
+
+.wrapper {
+  max-width: 1219px;
+  margin: 0 auto;
+}
+
+/*Header styles start */
+
+.header {
+  background-color: #007765;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.header__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 18px;
+}
+
+.header__list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 auto;
+}
+.header__item {
+  margin-right: 8px;
+  list-style: none;
+}
+.header__item:last-child {
+  margin-right: 0;
+}
+
+.header__link {
+  font-size: 24px;
+  line-height: normal;
+  color: #fff;
+  text-decoration: none;
+}
+
+.header__link:hover,
+.header__link:focus,
+.header__link:active {
+  opacity: 0.75;
+}
+.header__logo-pic {
+  height: 46px;
+  width: 184px;
+}
+/*Header styles end */
+
+/*Intro styles start */
+
+.intro {
+  height: 100vh;
+  background: url(./images/Jumotron.png) no-repeat center;
+  background-size: cover;
+}
+
+/*Intro styles end */

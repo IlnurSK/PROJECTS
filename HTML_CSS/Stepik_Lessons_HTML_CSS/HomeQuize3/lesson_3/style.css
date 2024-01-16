@@ -1,0 +1,11 @@
+.modal__close {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+}
+
+.modal__footer {
+  text-align: right;
+  box-sizing: border-box;
+  padding: 10px 20px;
+}

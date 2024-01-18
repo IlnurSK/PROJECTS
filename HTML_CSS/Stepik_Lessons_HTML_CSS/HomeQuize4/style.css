@@ -1,60 +1,5 @@
-/* header {
-  background-color: #007765;
-}
-.container {
-  width: 100%;
-  max-width: 1219px;
-  padding: 20px;
-  margin: 0 auto;
-}
-
-.logo {
-  float: left;
-  height: 46px;
-}
-
-nav {
-  float: right;
-  margin: 0 auto;
-}
-
-nav ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-nav li {
-  display: inline-block; 
-}
-
-.container:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-nav a {
-  text-decoration: none;
-  color: #ffffff;
-  font-family: "Roboto", sans-serif;
-  font-size: 24px;
-  line-height: 46px;
-  padding: 0px 4px;
-}
-
-.jumbotron {
-  background-image: url("images/Jumotron.png");
-  background-size: cover;
-}
-
-.jumbotron > p {
-  color: #ffffff;
-  font-family: "Roboto", sans-serif;
-  font-size: 72px;
-} */
 body {
-  font-family: "Roboto", sans-serif; 
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-size: 16px;
   line-height: 1.2;
@@ -63,7 +8,7 @@ body {
 }
 
 .wrapper {
-  max-width: 1219px;
+  max-width: 1110px;
   margin: 0 auto;
 }
 
@@ -120,9 +65,174 @@ body {
 /*Intro styles start */
 
 .intro {
-  height: 100vh;
-  background: url(./images/Jumotron.png) no-repeat center;
+  background: url(./images/image.svg), lightgray 50% / cover no-repeat;
   background-size: cover;
+  padding-top: 248px;
+  padding-bottom: 160px;
+}
+.intro__title {
+  color: #fff;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 72px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0 auto;
 }
 
 /*Intro styles end */
+
+/*Problem styles start */
+
+.problem {
+  padding-top: 48px;
+  padding-bottom: 92px;
+  background: #eee;
+}
+
+.problem__title {
+  width: 1110px;
+  margin: 0 auto;
+  color: #007765;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.problem__text {
+  color: #000;
+  font-family: "Roboto", sans-serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.problem__text:last-child {
+  margin-bottom: 0;
+}
+/*Problem styles end */
+
+/*Intro_2 styles start */
+
+.intro__2 {
+  background: url(./images/image\ 1.svg), lightgray 50% / cover no-repeat;
+  background-size: cover;
+  padding-top: 128px;
+  padding-bottom: 127px;
+}
+.intro__2__text {
+  margin: 0 auto;
+  width: 893px;
+  color: #fff;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 48px;
+  font-style: italic;
+  font-weight: 500;
+  line-height: normal;
+}
+/*Intro_2 styles end */
+
+/*Coin styles start */
+
+.coin {
+  padding-top: 48px;
+  padding-bottom: 92px;
+}
+
+.coin__title {
+  margin: 0 auto;
+  color: #007765;
+  text-align: center;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.coin__logo {
+  margin-top: 16px;
+}
+
+.coin__logo-pic {
+  width: 115px;
+  height: 115px;
+  float: left;
+  margin-right: 48px;
+}
+
+.coin__logo-text {
+  margin: 0 auto;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.coin__text {
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+/*Coin styles end  */
+
+/*Team styles start  */
+
+.team {
+  padding-top: 58px;
+  padding-bottom: 112px;
+  background: #eee;
+}
+
+.team__title {
+  margin: 0 auto;
+  color: #007765;
+  text-align: center;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.team__cards {  
+  margin-top: 56px;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  grid-row-gap: 82px;
+  grid-column-gap: 212px;  
+}
+
+.team__card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+
+.team__card-name {
+  margin-top: 12px;
+  margin-bottom: 0;
+  margin-left: auto;
+  margin-right: auto;
+  color: #007765;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.team__card-title {
+  margin: 0;
+  color: #000;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+}
+/*Team styles end  */

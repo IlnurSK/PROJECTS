@@ -8,8 +8,12 @@ body {
 }
 
 .wrapper {
-  max-width: 1110px;
-  margin: 0 auto;
+  box-sizing: border-box;
+  max-width: 1219px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 55px;
+  padding-right: 55px;
 }
 /*Метод перехода по якорям с отступом высотой шапки*/
 

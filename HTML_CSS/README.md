@@ -13,3 +13,5 @@
 [Еще одна интересная картинка по Flexbox](https://ucarecdn.com/276aaa90-4676-43c3-8447-418d8d50041e/)
 
 [Псевдоклассы CSS-селекторов](https://developer.mozilla.org/ru/docs/Web/CSS/Pseudo-classes)
+
+[Мини-игра по псевдоклассам CSS - CSS Diner](https://flukeout.github.io/)

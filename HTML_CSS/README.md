@@ -17,3 +17,5 @@
 [Мини-игра по псевдоклассам CSS - CSS Diner](https://flukeout.github.io/)
 
 [Шпаргалка по анимациям - Функция плавности (easing)](https://easings.net/ru#)
+
+[Документация по свойствам `transition`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)

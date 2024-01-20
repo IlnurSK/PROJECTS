@@ -16,4 +16,4 @@
 
 [Мини-игра по псевдоклассам CSS - CSS Diner](https://flukeout.github.io/)
 
-[Шпаргалка по анимациями - Функция плавности (easing)](https://easings.net/ru#)
+[Шпаргалка по анимациям - Функция плавности (easing)](https://easings.net/ru#)

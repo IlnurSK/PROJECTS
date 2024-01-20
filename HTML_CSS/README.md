@@ -15,3 +15,5 @@
 [Псевдоклассы CSS-селекторов](https://developer.mozilla.org/ru/docs/Web/CSS/Pseudo-classes)
 
 [Мини-игра по псевдоклассам CSS - CSS Diner](https://flukeout.github.io/)
+
+[Шпаргалка по анимациями - Функция плавности (easing)](https://easings.net/ru#)

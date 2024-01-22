@@ -19,3 +19,9 @@
 [Шпаргалка по анимациям - Функция плавности (easing)](https://easings.net/ru#)
 
 [Документация по свойствам `transition`](https://developer.mozilla.org/en-US/docs/Web/CSS/transition)
+
+[Современный учебник JavaScript](https://learn.javascript.ru/)
+
+[Учебники по джаве скрипт, css, PHP, SQL](https://html5css.ru/html/default.php)
+
+[Уроки по HTML5](https://html5book.ru/)

@@ -31,3 +31,7 @@
 [Компоненты CSS фреймворка Bootstrap](https://getbootstrap.com/docs/4.1/components/buttons/)
 
 [Примеры страниц на Bootstrap](https://getbootstrap.com/docs/4.1/examples/)
+
+[BOOTSTRAP официальная документация](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
+
+[BOOTSTRAP документация на русском](https://getbootstrap.ru/docs/5.3/)

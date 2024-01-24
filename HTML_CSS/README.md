@@ -35,3 +35,7 @@
 [BOOTSTRAP официальная документация](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
 [BOOTSTRAP документация на русском](https://getbootstrap.ru/docs/5.3/)
+
+[Roadmap верстальщика](https://webmasters.teamdev.com/)
+
+[Roadmap from developer to designer](https://tilda.education/articles-from-developer-to-designer)

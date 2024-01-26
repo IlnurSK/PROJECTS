@@ -44,4 +44,4 @@
 
 [Руководство по REST API](https://restapitutorial.ru/)
 
-[LINUX необходимы минимум](https://ru.hexlet.io/blog/posts/basic-linux-productivity)
+[LINUX необходимый минимум](https://ru.hexlet.io/blog/posts/basic-linux-productivity)

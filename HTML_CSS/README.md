@@ -43,3 +43,5 @@
 [КУРС по паттернам проектирования](https://refactoring.guru/ru/refactoring)
 
 [Руководство по REST API](https://restapitutorial.ru/)
+
+[LINUX необходимы минимум](https://ru.hexlet.io/blog/posts/basic-linux-productivity)

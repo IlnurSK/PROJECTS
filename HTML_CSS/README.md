@@ -41,3 +41,5 @@
 [Roadmap from developer to designer](https://tilda.education/articles-from-developer-to-designer)
 
 [КУРС по паттернам проектирования](https://refactoring.guru/ru/refactoring)
+
+[Руководство по REST API](https://restapitutorial.ru/)

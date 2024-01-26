@@ -45,3 +45,5 @@
 [Руководство по REST API](https://restapitutorial.ru/)
 
 [LINUX необходимый минимум](https://ru.hexlet.io/blog/posts/basic-linux-productivity)
+
+[Бесплатный курс по ОПЕРАЦИОННЫМ СИСТЕМАМ от HEXLET](https://ru.hexlet.io/courses/operating_systems)

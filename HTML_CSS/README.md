@@ -47,3 +47,5 @@
 [LINUX необходимый минимум](https://ru.hexlet.io/blog/posts/basic-linux-productivity)
 
 [Бесплатный курс по ОПЕРАЦИОННЫМ СИСТЕМАМ от HEXLET](https://ru.hexlet.io/courses/operating_systems)
+
+[Front-end статья - гайдбук](https://bespoyasov.ru/front-not-pain/#preface)

@@ -35,3 +35,17 @@
 [BOOTSTRAP официальная документация](https://getbootstrap.com/docs/5.3/getting-started/introduction/)
 
 [BOOTSTRAP документация на русском](https://getbootstrap.ru/docs/5.3/)
+
+[Roadmap верстальщика](https://webmasters.teamdev.com/)
+
+[Roadmap from developer to designer](https://tilda.education/articles-from-developer-to-designer)
+
+[КУРС по паттернам проектирования](https://refactoring.guru/ru/refactoring)
+
+[Руководство по REST API](https://restapitutorial.ru/)
+
+[LINUX необходимый минимум](https://ru.hexlet.io/blog/posts/basic-linux-productivity)
+
+[Бесплатный курс по ОПЕРАЦИОННЫМ СИСТЕМАМ от HEXLET](https://ru.hexlet.io/courses/operating_systems)
+
+[Front-end статья - гайдбук](https://bespoyasov.ru/front-not-pain/#preface)

@@ -19,9 +19,10 @@ body {
 /* Header styles start */
 
 header {
-  position: sticky;
-  fill: #fff;
-  filter: drop-shadow(0px 0px 16px rgba(38, 38, 38, 0.16));
+  position: fixed;
+  width: 100%;
+  background-color: #fff;
+  box-shadow: 0px 0px 16px rgba(38, 38, 38, 0.16);
 }
 
 .header__wrapper {
@@ -32,11 +33,11 @@ header {
 }
 .header__sign__btn {
   background-image: url(./img/sign_btn.svg);
-  outline: none; 
+  outline: none;
   border: 0;
   background-color: transparent;
   width: 78px;
-  height: 40px;   
+  height: 40px;
 }
 
 .header__btns {
@@ -61,3 +62,80 @@ header {
 }
 
 /* Header styles end */
+
+/* Search bar styles start */
+
+.form__search {
+  padding-top: 128px;
+  border-bottom: 1px solid #7575754d;
+}
+
+.search__input {
+  border: 0;
+  width: 235px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+::placeholder {
+  color: #62626280;
+}
+
+/* Search bar styles end */
+
+/* Page title styles start */
+
+.h1__title {
+  margin: 0 auto;
+  margin-top: 56px;
+  color: #1d1d1d;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 34px;
+}
+
+/* Page title styles end*/
+
+/* Restaurants styles start */
+
+.restaurants {
+  padding-top: 16px;
+}
+.card__pic {
+  width: 317.935px;
+  height: 256px;
+}
+
+.card__name {
+  margin: 0 auto;
+  padding-top: 16px;
+  padding-bottom: 4px;
+  color: #1d1d1d;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.food__type {
+  margin: 0 auto;
+  padding-bottom: 4px;
+  color: #626262;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.cook__time {
+  margin: 0 auto;
+  padding-bottom: 20px;
+  color: #1d1d1d;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+}
+/* Restaurants styles end */

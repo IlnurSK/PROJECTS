@@ -12,7 +12,6 @@
 <body>
 
     <!--Header start-->
-
     <header class="header">
         <div class="wrapper">
             <div class="header__wrapper">
@@ -22,9 +21,11 @@
                     </a>
                 </div>
                 <div class="header__btns">
-                    <button class="header__sign__btn">
-                        <i class="header__sign__btn-text">Войти</i>
-                    </button>
+                    <form action="restaurant.html" target="_blank">
+                        <button class="header__sign__btn">
+                            <i class="header__sign__btn-text">Войти</i>
+                        </button>
+                    </form>
                     <div class="header__basket__btn">
                         <a href="#" class="header__basket__btn-link">
                             <img src="./img/basket.svg" alt="Посмотреть корзину" class="header__basket__btn-pic">
@@ -34,20 +35,190 @@
             </div>
         </div>
     </header>
-
     <!--Header end-->
 
     <main class="main">
+
         <!--Search bar start-->
         <section class="search">
             <div class="wrapper">
-                <div class="search__bar">
-                    <input type="text" placeholder="Поиск по ресторанам и кухням" class="search__input">
+                <form action="" class="form__search">
+                    <div class="search__bar">
+                        <input type="text" placeholder="Поиск по ресторанам и кухням" class="search__input">
+                    </div>
+                </form>
+
+            </div>
+        </section>
+        <!--Search bar end-->
+
+        <!--Page title start-->
+        <section class="title">
+            <div class="wrapper">
+                <h1 class="h1__title">
+                    Рестораны в Москве
+                </h1>
+            </div>
+        </section>
+        <!--Page title end-->
+
+        <!--Restaurants start-->
+        <section class="restaurants">
+            <div class="wrapper">
+                <div class="row">
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-1.svg" alt="Макдоналдс — Газетный" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                Макдоналдс — Газетный
+                            </h3>
+                            <p class="food__type">
+                                ₽₽ • Бургеры
+                            </p>
+                            <p class="cook__time">
+                                25 - 35 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-2.svg" alt="DimSum & Co — ЦДМ" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                DimSum & Co — ЦДМ
+                            </h3>
+                            <p class="food__type">
+                                ₽ • Японская • Китайская • Азиатская
+                            </p>
+                            <p class="cook__time">
+                                40 - 50 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-3.svg" alt="ДвижОК — Манежная" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                ДвижОК — Манежная
+                            </h3>
+                            <p class="food__type">
+                                ₽ • Американская • Европейская
+                            </p>
+                            <p class="cook__time">
+                                35 - 45 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-4.svg" alt="НЯ — NHA" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                НЯ — NHA
+                            </h3>
+                            <p class="food__type">
+                                ₽₽ • Вьетнамская
+                            </p>
+                            <p class="cook__time">
+                                30 - 40 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-5.svg" alt="Точка Дзы — Цветной" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                Точка Дзы — Цветной
+                            </h3>
+                            <p class="food__type">
+                                ₽₽ • Вьетнамская
+                            </p>
+                            <p class="cook__time">
+                                40 - 50 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-6.svg" alt="Cinnabon" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                Cinnabon
+                            </h3>
+                            <p class="food__type">
+                                ₽ • Выпечка • Десерты • Капкейки
+                            </p>
+                            <p class="cook__time">
+                                25 - 35 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-7.svg" alt="PIZZELOVE" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                PIZZELOVE
+                            </h3>
+                            <p class="food__type">
+                                ₽₽ • Пицца
+                            </p>
+                            <p class="cook__time">
+                                15 - 25 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-8.svg" alt="Zю кафе — Тверская" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                Zю кафе — Тверская
+                            </h3>
+                            <p class="food__type">
+                                ₽₽ • Японская
+                            </p>
+                            <p class="cook__time">
+                                25 - 35 мин
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-12">
+                        <div class="card">
+                            <div class="card__picture">
+                                <img src="./img/card-9.svg" alt="Bar BQ Cafe — Манежная" class="card__pic">
+                            </div>
+                            <h3 class="card__name">
+                                Bar BQ Cafe — Манежная
+                            </h3>
+                            <p class="food__type">
+                                ₽₽₽ • Европейская
+                            </p>
+                            <p class="cook__time">
+                                30 - 40 мин
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
+        <!--Restaurants end-->
 
-
+        <!--Footer start-->
+        <footer class="footer">
+            
+        </footer>
     </main>
 
 </body>

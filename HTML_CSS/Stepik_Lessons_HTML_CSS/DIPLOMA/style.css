@@ -20,6 +20,7 @@ body {
 
 header {
   position: fixed;
+  z-index: 2;
   width: 100%;
   background-color: #fff;
   box-shadow: 0px 0px 16px rgba(38, 38, 38, 0.16);
@@ -31,6 +32,12 @@ header {
   align-items: center;
   justify-content: space-between;
 }
+
+.header__logo {
+  width: 119.231px;
+  height: 12.308px;
+}
+
 .header__sign__btn {
   background-image: url(./img/sign_btn.svg);
   outline: none;
@@ -139,3 +146,133 @@ header {
   line-height: 21px;
 }
 /* Restaurants styles end */
+
+/* Footer logo style start */
+
+.footer {
+  background-color: #262626;
+}
+
+.footer__logo-pic {
+  width: 190.769px;
+  height: 19.692px;
+}
+
+.footer__logo {
+  padding-top: 56px;
+  padding-bottom: 40px;
+}
+
+/* Footer logo style end */
+
+/* Footer nav style start */
+
+.footer__nav {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  padding-top: 39px;
+  padding-bottom: 18px;
+}
+
+.lang__bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #3b3b3b;
+  height: 40px;
+}
+
+.lang__bar-pic {  
+  padding-left: 16px;
+}
+
+.lang__bar-dsc {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 16.28px;
+  color: #fff;
+}
+
+.lang__bar-pic2 {
+  margin-left: auto;
+  padding-right: 8px;
+}
+
+.dropdown {
+  position: relative;
+  margin-top: -7px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 100%;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.footer__card-title {
+  display: flex;
+  padding-top: 33px;
+}
+
+.footer__card-title-tag {
+  color: #49a144;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+.footer__card-title-tag-txt {
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0;
+}
+
+.footer__card-social {
+  padding-top: 17px;
+  padding-bottom: 39px;
+}
+
+.social-tw {
+  padding-left: 12px;
+}
+
+.social-inst {
+  padding-left: 8px;
+}
+.footer__links {
+  text-decoration: none;
+}
+.footer__links-h3 {
+  margin: 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-bottom: 23px;
+}
+/* Footer nav style end */

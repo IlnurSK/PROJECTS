@@ -1,3 +1,7 @@
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0 auto;
   font-family: "Roboto", sans-serif;
@@ -15,6 +19,77 @@ body {
   padding-left: 81px;
   padding-right: 87px;
 }
+
+@media (min-width: 992px) {
+  .scroll__btn-pic {
+    height: 80px;
+    width: 80px;
+  }
+  .intro {
+    padding-top: 72px;
+    background-image: url(./img/intro.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-position-y: 72px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .scroll__btn-pic {
+    height: 80px;
+    width: 80px;
+  }
+  .wrapper {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .intro {
+    padding-top: 72px;
+    background-image: url(./img/intro.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-position-y: 72px;
+  }
+}
+
+@media (max-width: 767px) {
+  .scroll__btn-pic {
+    height: 64px;
+    width: 64px;
+  }
+  .wrapper {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .header__basket__btn {
+    display: none;
+  }
+  .header {
+    padding-top: 16px;
+    padding-bottom: 16px;
+  }
+  .intro {
+    padding-top: 72px;
+    background-image: url(./img/intro_sm.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+    background-position-y: 72px;
+  }
+}
+
+/* Scroll button styles start */
+
+.scroll__btn {
+  position: fixed;
+  bottom: 24px;
+  right: 16px;
+  z-index: 9;
+}
+
+/* Scroll button styles end */
 
 /* Header styles start */
 
@@ -111,8 +186,9 @@ header {
   padding-top: 16px;
 }
 .card__pic {
-  width: 317.935px;
-  height: 256px;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .card__name {
@@ -182,7 +258,7 @@ header {
   height: 40px;
 }
 
-.lang__bar-pic {  
+.lang__bar-pic {
   padding-left: 16px;
 }
 
@@ -276,3 +352,51 @@ header {
   padding-bottom: 23px;
 }
 /* Footer nav style end */
+
+/* Footer stores style start */
+
+.footer__stores {
+  display: flex;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  align-items: center;
+  justify-content: center;
+}
+.google__link-pic {
+  padding-left: 40.34px;
+}
+
+/* Footer stores style end */
+
+/* Footer credits style start */
+
+.footer__credits {
+  padding-top: 40px;
+  padding-bottom: 16px;
+}
+
+.footer__credits-link {
+  text-decoration: none;
+}
+
+.footer__credits-link-h4 {
+  margin: 0;
+  text-decoration: none;
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  padding-bottom: 24px;
+}
+/* Footer credits style end */
+
+/* Page-2 INTRO styles start */
+
+.restaurant__card {
+  margin-top: 80px;
+  margin-bottom: 80px;
+}
+
+/* Page-2 INTRO styles end */

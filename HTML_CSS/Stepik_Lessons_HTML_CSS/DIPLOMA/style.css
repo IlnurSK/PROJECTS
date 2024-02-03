@@ -32,6 +32,24 @@ body {
     background-position: center;
     background-size: 100%;
     background-position-y: 72px;
+  }  
+  .restaurant__name {
+    font-size: 36px;
+    font-weight: 400;  
+    margin: 0;  
+  }
+  .restaurant__card {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding: 38px;
+    background-color: #ffffff;
+    box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.5);
+  }
+  .restaurant__card-discr {  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 54px;
   }
 }
 
@@ -48,9 +66,26 @@ body {
     padding-top: 72px;
     background-image: url(./img/intro.svg);
     background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100%;
+    background-position: center;   
     background-position-y: 72px;
+  }
+  .restaurant__name {
+    font-size: 36px;
+    font-weight: 400;  
+    margin: 0;  
+  }
+  .restaurant__card {
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding: 38px;
+    background-color: #ffffff;
+    box-shadow: 0px 5px 6px 0px rgba(0, 0, 0, 0.5);
+  }
+  .restaurant__card-discr {  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 54px;
   }
 }
 
@@ -77,6 +112,31 @@ body {
     background-position: center;
     background-size: 100%;
     background-position-y: 72px;
+  }
+  .restaurant__name {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 400;
+    margin: 0;
+  }
+  .restaurant__card-discr {       
+    flex-direction: column;    
+  }
+  .restaurant__card {
+    margin-top: 131px;
+    margin-bottom: 56px;
+    padding: 24px;
+    background-color: #ffffff;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  }
+  .restaurant__card-discr-cook-time {
+    margin-top: 16px;
+  }
+  .restaurant__card-discr {  
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 40px;
   }
 }
 
@@ -394,9 +454,30 @@ header {
 
 /* Page-2 INTRO styles start */
 
-.restaurant__card {
-  margin-top: 80px;
-  margin-bottom: 80px;
+
+
+
+.restaurant__card-discr-food-type {
+  margin: 0;
+  color: #626262;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.restaurant__card-discr-cook-time {
+  background-color: #262626;
+  border-radius: 16px;
+}
+
+.cook__time-dscr {
+  margin: 0;
+  padding: 8px 16px;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400
 }
 
 /* Page-2 INTRO styles end */

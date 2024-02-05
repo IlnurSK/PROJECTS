@@ -51,6 +51,22 @@ body {
     align-items: center;
     padding-top: 54px;
   }
+  .title__line {
+    display: none;
+  }
+  .menu__card {
+    margin-bottom: 49px;
+    border: 1px solid rgba(117, 117, 117, 0.2);
+  }
+  .menu__card-title {
+    margin: 0;
+    padding-left: 16px;
+    padding-top: 16px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
@@ -86,6 +102,22 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-top: 54px;
+  }
+  .title__line {
+    display: none;
+  }
+  .menu__card {
+    margin-bottom: 32px;
+    border: 1px solid rgba(117, 117, 117, 0.2);
+  }
+  .menu__card-title {
+    margin: 0;
+    padding-left: 16px;
+    padding-top: 16px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
   }
 }
 
@@ -124,7 +156,6 @@ body {
   }
   .restaurant__card {
     margin-top: 131px;
-    margin-bottom: 56px;
     padding: 24px;
     background-color: #ffffff;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
@@ -137,6 +168,29 @@ body {
     justify-content: space-between;
     align-items: center;
     padding-top: 40px;
+  }
+  .filters {
+    display: none;
+  }
+  .h1__title {
+    text-align: center;
+  }
+
+  .title {
+    padding-bottom: 12px;
+  }
+  .menu__card {
+    margin-bottom: 16px;
+    border-bottom: 1px solid rgba(117, 117, 117, 0.2);
+  }
+  .menu__card-title {
+    margin: 0;
+    padding-left: 16px;
+    padding-top: 16px;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
   }
 }
 
@@ -236,6 +290,13 @@ header {
   font-style: normal;
   font-weight: 400;
   line-height: 34px;
+}
+
+.title__line {
+  margin: 0 auto;
+  margin-top: 12px;
+  width: 50px;
+  color: #757575;
 }
 
 /* Page title styles end*/
@@ -517,22 +578,48 @@ header {
 
 .menu {
   padding-top: 32px;
+  padding-bottom: 31px;
 }
 
 .menu__card {
-  border: 1px solid rgba(117, 117, 117, 0.2); 
-  overflow: hidden; 
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
 }
+.menu__card-discr {
+  display: flex;
+  flex-direction: column;
+}
+
 .menu__card:hover,
 .menu__card:focus,
 .menu__card:active {
-  background-color: rgba(117, 117, 117, 0.1)
+  background-color: rgba(117, 117, 117, 0.1);
+  .menu__card-sel-txt {
+    display: block;
+  }
 }
-.menu__card-pic {
-  float: right;  
+
+.menu__card-sel-txt {
+  display: none;
+  margin: 0;
+  padding-left: 16px;
+  padding-top: 4px;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  color: rgba(98, 98, 98, 1);
 }
 
-
-
+.menu__card-price {
+  margin: 0;
+  margin-top: auto;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 21px;
+}
 
 /* Page-2 Menu styles end */

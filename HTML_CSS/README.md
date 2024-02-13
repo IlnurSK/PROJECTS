@@ -2,6 +2,8 @@
 
 [Единицы измерения: px, em, rem и другие](https://learn.javascript.ru/css-units)
 
+[Таблица цветов HTML](https://htmlcolorcodes.com/color-names/)
+
 [Верстка сайта с нуля из Figma для начинающих](https://www.youtube.com/watch?v=OkNfBnq_c7c)
 
 [Flexbox Froggy - Игра для обзора возможностей Flexbox](https://flexboxfroggy.com/#ru)

@@ -43,3 +43,6 @@
 [What is the difference between webpage, website, web server, and search engine?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/Pages_sites_servers_and_search_engines)
 
 [What is a web server?](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/Web_mechanics/What_is_a_web_server)
+
+## TERMINAL (CLI)
+[Расшифровка любых команд терминала](https://explainshell.com/)

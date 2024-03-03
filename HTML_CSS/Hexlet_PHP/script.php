@@ -8,8 +8,7 @@
 </head>
 
 <body>
-    <?php
-    setlocale(LC_ALL, 'ru_RU');
+    <?php   
     function invertCase($text)
     {
         // BEGIN (write your solution here)

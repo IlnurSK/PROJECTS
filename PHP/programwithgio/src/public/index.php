@@ -1,17 +1,25 @@
 <?php
 
-// Namespace Tutorial
+// PHP Coding Standards, Autoloading (PSR-4) & Composer
 
-require_once '../PaymentGateway/Stripe/Transaction.php';
-require_once '../PaymentGateway/Paddle/CustomerProfile.php';
-require_once '../PaymentGateway/Paddle/Transaction.php';
-require_once '../Notification/Email.php';
 
-use PaymentGateway\Paddle\{Transaction, CustomerProfile};
-use PaymentGateway\Stripe\Transaction as StripeTransaction;
+//spl_autoload_register(
+//    function ($class) {
+//        $path = __DIR__ . '/../' . lcfirst(str_replace('\\', '/', $class)) . '.php';
+//
+//        require $path;
+//    }
+//);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use App\PaymentGateway\Paddle\Transaction;
+
 
 $paddleTransaction = new Transaction();
-$stripeTransaction = new StripeTransaction();
-$paddleCustomerProfile = new CustomerProfile();
 
-var_dump($paddleCustomerProfile, $paddleTransaction, $stripeTransaction);
+$id = new \Ramsey\Uuid\UuidFactory();
+
+echo $id->uuid4();
+
+var_dump($paddleTransaction);

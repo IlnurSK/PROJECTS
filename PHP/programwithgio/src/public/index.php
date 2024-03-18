@@ -1,25 +1,23 @@
 <?php
 
-// PHP Coding Standards, Autoloading (PSR-4) & Composer
+// Class Constants
 
-
-//spl_autoload_register(
-//    function ($class) {
-//        $path = __DIR__ . '/../' . lcfirst(str_replace('\\', '/', $class)) . '.php';
-//
-//        require $path;
-//    }
-//);
+use App\Enums\Status;
+use App\PaymentGateway\Paddle\Transaction;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use App\PaymentGateway\Paddle\Transaction;
+$transaction = new Transaction();
 
+//echo $transaction::STATUS_PAID;
+//echo Transaction::STATUS_PAID;
 
-$paddleTransaction = new Transaction();
+//echo $transaction::class;
+//echo Transaction::class;
 
-$id = new \Ramsey\Uuid\UuidFactory();
-
-echo $id->uuid4();
-
-var_dump($paddleTransaction);
+//$transaction->setStatus('paid');
+//$transaction->setStatus(Transaction::STATUS_PAID);
+//$transaction->setStatus('asdasdasd');
+//$transaction->setStatus(Transaction::STATUS_PAID);
+$transaction->setStatus(Status::PAID);
+var_dump($transaction);

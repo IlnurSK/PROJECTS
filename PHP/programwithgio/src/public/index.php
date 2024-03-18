@@ -1,29 +1,26 @@
 <?php
 
-// Static Properties & Methods In OOP
+// Encapsulation & Abstraction
 
-use App\DB;
 use App\PaymentGateway\Paddle\Transaction;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$transaction = new Transaction(25,'Transaction 1');
-//$transaction = new Transaction(25,'Transaction 1');
-//$transaction = new Transaction(25,'Transaction 1');
-//$transaction = new Transaction(25,'Transaction 1');
-//$transaction = new Transaction(25,'Transaction 1');
+$transaction = new Transaction(25);
+//$transaction1 = new Transaction(125);
 
-//var_dump($transaction::$count);
-//var_dump(Transaction::getCount());
-//var_dump($transaction::$amount);
-//var_dump($transaction::process());
+//$transaction->amount = 125;
+//$transaction->setAmount(125);
 
-//$db = new DB();
-$db = DB::getInstance([]);
-$db = DB::getInstance([]);
-$db = DB::getInstance([]);
+//$reflectionProperty = new ReflectionProperty(Transaction::class, 'amount');
+//
+//$reflectionProperty->setAccessible(true);
+//
+//$reflectionProperty->setValue($transaction, 125);
+//
+//var_dump($reflectionProperty->getValue($transaction));
 
-//$db = new DB([]);
-//$db = new DB([]);
-//$db = new DB([]);
-//$db = new DB([]);
+//$transaction->amount;
+
+$transaction->process();
+//$transaction1->process();

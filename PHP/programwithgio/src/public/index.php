@@ -1,18 +1,13 @@
 <?php
 
-// Abstract Classes & Methods
+// Interface & Polymorphism
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$fields = [
-//    new \App\Field('baseField'),
-    new \App\Text('textField'),
-//    new \App\Boolean('booleanField'),
-    new \App\Checkbox('checkboxField'),
-    new \App\Radio('radioField'),
-];
+//$collector = new \App\CollectionAgency();
+//echo $collector->collect(100) . PHP_EOL;
 
-foreach ($fields as $field) {
-    echo $field->render() . '<br />';
-}
+$service = new \App\DebtCollectionService();
 
+echo $service->collectDebt(new \App\CollectionAgency()) . PHP_EOL;
+//echo $service->collectDebt(new \App\Rocky()) . PHP_EOL;

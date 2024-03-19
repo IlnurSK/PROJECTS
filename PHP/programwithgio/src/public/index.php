@@ -1,26 +1,19 @@
 <?php
 
-// Encapsulation & Abstraction
+// Inheritance
 
-use App\PaymentGateway\Paddle\Transaction;
+use App\Toaster;
+use App\ToasterPro;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$transaction = new Transaction(25);
-//$transaction1 = new Transaction(125);
+$toaster = new ToasterPro();
 
-//$transaction->amount = 125;
-//$transaction->setAmount(125);
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->addSlice('bread');
+$toaster->toastBagel();
 
-//$reflectionProperty = new ReflectionProperty(Transaction::class, 'amount');
-//
-//$reflectionProperty->setAccessible(true);
-//
-//$reflectionProperty->setValue($transaction, 125);
-//
-//var_dump($reflectionProperty->getValue($transaction));
 
-//$transaction->amount;
-
-$transaction->process();
-//$transaction1->process();

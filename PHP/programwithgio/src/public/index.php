@@ -1,13 +1,27 @@
 <?php
 
-// Interface & Polymorphism
+// Magic Methods
 
 require __DIR__ . '/../vendor/autoload.php';
 
-//$collector = new \App\CollectionAgency();
-//echo $collector->collect(100) . PHP_EOL;
+$invoice = new App\Invoice();
 
-$service = new \App\DebtCollectionService();
+//$invoice->amount = 15;
+////
+////echo $invoice->amount . PHP_EOL;
+//var_dump(isset($invoice->amount));
+//var_dump($invoice);
+//
+//unset($invoice->amount);
+////var_dump(isset($invoice->amount));
+//var_dump($invoice);
 
-echo $service->collectDebt(new \App\CollectionAgency()) . PHP_EOL;
-//echo $service->collectDebt(new \App\Rocky()) . PHP_EOL;
+//$invoice->process(1, 2, 3);
+//$invoice::process(1, 2, 3);
+
+//echo $invoice;
+//var_dump($invoice instanceof Stringable);
+//var_dump(is_callable($invoice));
+//$invoice();
+
+var_dump($invoice);

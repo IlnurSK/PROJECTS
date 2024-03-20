@@ -1,27 +1,14 @@
 <?php
 
-// Magic Methods
+// Late Static Binding
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-$invoice = new App\Invoice();
-
-//$invoice->amount = 15;
-////
-////echo $invoice->amount . PHP_EOL;
-//var_dump(isset($invoice->amount));
-//var_dump($invoice);
+//$classA = new \App\ClassA();
+//$classB = new \App\ClassB();
 //
-//unset($invoice->amount);
-////var_dump(isset($invoice->amount));
-//var_dump($invoice);
+//echo $classA->getName() . PHP_EOL;
+//echo $classB->getName() . PHP_EOL;
 
-//$invoice->process(1, 2, 3);
-//$invoice::process(1, 2, 3);
-
-//echo $invoice;
-//var_dump($invoice instanceof Stringable);
-//var_dump(is_callable($invoice));
-//$invoice();
-
-var_dump($invoice);
+echo \App\ClassA::getName() . PHP_EOL;
+echo \App\ClassB::getName() . PHP_EOL;

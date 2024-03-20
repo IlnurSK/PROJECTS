@@ -4,12 +4,26 @@ namespace App;
 
 class ClassA
 {
-    protected static string $name = 'A';
-    public static function getName(): string
+    public function __construct(public int $x, public int $y)
     {
-//        var_dump(self::class);
-//        var_dump(get_called_class());
-//        return self::$name;
-        return static::$name;
+    }
+
+    public function foo(): string
+    {
+        return 'foo';
+    }
+
+    public function bar(): object
+    {
+        return new class($this->x, $this->y) /**  extends ClassA */ {
+            public function __construct(public int $x, public int $y)
+            {
+//                echo $this->foo();
+//                parent::__construct($x, $y);
+//
+//                $this->foo();
+                var_dump($x, $y);
+            }
+        };
     }
 }

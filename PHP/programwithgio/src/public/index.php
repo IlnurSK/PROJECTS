@@ -1,32 +1,26 @@
 <?php
 
-// Traits
+// Anonymous Classes
 
-use App\LatteMaker;
+use App\MyInterface;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$coffeeMaker = new \App\CoffeeMaker();
-$coffeeMaker->makeCoffee();
-
-$latteMaker = new \App\LatteMaker();
-$latteMaker->makeCoffee();
-$latteMaker->makeLatte();
-
-$cappuccinoMaker = new \App\CappuccinoMaker();
-$cappuccinoMaker->makeCoffee();
-$cappuccinoMaker->makeCappuccino();
-
-$allInOneCoffeeMaker = new \App\AllInOneCoffeeMaker();
-$allInOneCoffeeMaker->makeCoffee();
-$allInOneCoffeeMaker->makeLatte();
-//$allInOneCoffeeMaker->makeOriginalLatte();
-$allInOneCoffeeMaker->makeCappuccino();
-
-//\App\LatteMaker::foo();
-//echo \App\LatteMaker::$x;
-//\App\CoffeeMaker::$foo = 'foo';
-//\App\LatteMaker::$foo = 'foo';
-//\App\AllInOneCoffeeMaker::$foo = 'bar';
+//$obj = new class(1, 2, 3) implements MyInterface { //extends MyClass
+//    // use MyTrait;
+//    public function __construct(public int $x, public int $y, public int $z)
+//    {
+//    }
+//};
 //
-//echo \App\LatteMaker::$foo . ' ' . \App\AllInOneCoffeeMaker::$foo . PHP_EOL;
+//foo($obj);
+//function foo(MyInterface $obj)
+//{
+//    var_dump($obj);
+//}
+
+//var_dump(get_class($obj));
+
+$obj = new \App\ClassA(1, 2);
+
+var_dump($obj->bar());

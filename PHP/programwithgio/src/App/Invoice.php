@@ -2,14 +2,11 @@
 
 namespace App;
 
-class Invoice // extends Mail // extends Customer
+class Invoice
 {
-    use Mail;
-    public function process()
-    {
-        echo 'Processed invoice' . PHP_EOL;
+    public ?Invoice $linkedInvoice = null;
 
-        // send email
-        $this->sendEmail();
+    public function __construct(public Customer $customer, public float $amount, public string $description)
+    {
     }
 }

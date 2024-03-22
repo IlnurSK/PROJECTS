@@ -1,20 +1,13 @@
 <?php
 
-// DocBlock Adding Comments to Classes & Methods
+// Object Cloning & Clone Magic Method
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// single line comment
+$invoice = new \App\Invoice();
 
-# single line comment
+//$invoice2 = new $invoice();
+//$invoice2 = $invoice;
+$invoice2 = clone $invoice;
 
-/*
- * multi-line comment
- */
-
-/**
- * Docblock
- *
- * @param
- * @return
- */
+var_dump($invoice, $invoice2, $invoice === $invoice2);

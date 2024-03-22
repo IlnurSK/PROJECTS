@@ -1,29 +1,20 @@
 <?php
 
-// Variable Storage & Object Comparison
-
-use App\CustomInvoice;
-use App\Invoice;
+// DocBlock Adding Comments to Classes & Methods
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$invoice1 = new Invoice(new \App\Customer('Customer 1'), 25, 'My Invoice');
-$invoice2 = new Invoice(new \App\Customer('Customer 2'), 25, 'My Invoice');
-//$invoice2 = new Invoice(25, 'My Invoice');
-//$invoice2 = new CustomInvoice(25, 'My Invoice');
+// single line comment
 
-//$invoice3 = $invoice1;
+# single line comment
 
-$invoice1->linkedInvoice = $invoice2;
-$invoice2->linkedInvoice = $invoice1;
+/*
+ * multi-line comment
+ */
 
-echo 'invoice1 == invoice2' . PHP_EOL;
-var_dump($invoice1 == $invoice2);
-
-echo 'invoice1 === invoice2' . PHP_EOL;
-var_dump($invoice1 === $invoice2);
-
-//$invoice3->amount = 250;
-//
-//var_dump($invoice1, $invoice3);
-var_dump($invoice1, $invoice2);
+/**
+ * Docblock
+ *
+ * @param
+ * @return
+ */

@@ -2,60 +2,32 @@
 
 namespace App;
 
-class Invoice //implements \Serializable
+use App\Exception\InvoiceException;
+use App\Exception\MissingBillingInfoException;
+
+class Invoice
 {
-//    private string $id;
-//    protected string $id;
-    public string $id;
-//    public float $amount;
-//    public string $description;
-//    public string $creditCardNumber;
-
-    public function __construct(
-        public float $amount,
-        public string $description,
-        public string $creditCardNumber
-    ) {
-        $this->id = uniqid('invoice_');
-    }
-
-//    public function serialize()
-//    {
-//        // TODO: Implement serialize() method.
-//    }
-//
-//    public function unserialize(string $data)
-//    {
-//        // TODO: Implement unserialize() method.
-//    }
-
-//    public function __sleep(): array
-//    {
-//        return ['id', 'amount'];
-//    }
-//
-//    public function __wakeup(): void
-//    {
-//        // TODO: Implement __wakeup() method.
-//    }
-
-    public function __serialize(): array
+    public function __construct(public Customer $customer)
     {
-        return [
-            'id' => $this->id,
-            'amount' => $this->amount,
-            'description' => $this->description,
-            'creditCardNumber' => base64_encode($this->creditCardNumber),
-            'foo' => 'bar'
-        ];
     }
 
-    public function __unserialize(array $data): void
+    public function process(float $amount): void
     {
-        $this->id = $data['id'];
-        $this->amount = $data['amount'];
-        $this->description = $data['description'];
-        $this->creditCardNumber = base64_decode($data['creditCardNumber']);
-//        var_dump($data);
+        if ($amount <= 0) {
+//            throw new \InvalidArgumentException('Invalid invoice amount');
+            throw InvoiceException::invalidAmount();
+        }
+        if (empty($this->customer->getBillingInfo())) {
+//            throw new MissingBillingInfoException('Missing billing information');
+//            throw new MissingBillingInfoException();
+            throw InvoiceException::missingBillingInfo();
+        }
+        echo 'Processing $' . $amount . ' invoice - ';
+
+        sleep(1);
+
+        echo 'OK' . PHP_EOL;
     }
+
+
 }

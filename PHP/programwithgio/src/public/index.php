@@ -1,31 +1,32 @@
 <?php
 
-// Iterators & Iterable Type
-
-use App\InvoiceCollection;
+// Superglobals Basic Routing
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-//foreach (['a', 'b', 'c', 'd', 'e'] as $key => $value) {
-//    echo $key . ' = ' . $value . PHP_EOL;
-//}
+//echo '<pre>';
+//print_r($_SERVER);
+//echo '<pre>';
 
-//foreach (new App\Invoice(25) as $key => $value) {
-//    echo $key . ' = ' . $value . PHP_EOL;
-//}
+$router = new App\Router();
 
-$invoiceCollection = new InvoiceCollection([new \App\Invoice(15), new \App\Invoice(25), new \App\Invoice(50)]);
-foreach ($invoiceCollection as $invoice) {
-//    var_dump($invoice);
-    echo $invoice->id . ' - ' . $invoice->amount . PHP_EOL;
-}
+//$router->register(
+//    '/',
+//    function () {
+//        echo 'Home';
+//    }
+//);
 
-foo ($invoiceCollection);
-foo([1,2,3]);
-function foo(iterable $iterable)
-{
-    foreach ($iterable as $i => $item) {
-        // ...
-        echo $i . PHP_EOL;
-    }
-}
+$router
+    ->register('/', [App\Classes\Home::class, 'index'])
+    ->register('/invoices', [App\Classes\Invoice::class, 'index'])
+    ->register('/invoices/create', [App\Classes\Invoice::class, 'create']);
+
+//$router->register(
+//    '/invoices',
+//    function () {
+//        echo 'Invoices';
+//    }
+//);
+
+echo $router->resolve($_SERVER['REQUEST_URI']);

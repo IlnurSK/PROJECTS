@@ -4,23 +4,23 @@ declare(strict_types=1);
 
 namespace App\Classes;
 
+use App\View;
+
 class Home
 {
     public function index(): string
     {
-//        echo '<pre>';
-//        var_dump($_REQUEST);
-//        echo '<pre>';
-//
-//        echo '<pre>';
-//        var_dump($_GET);
-//        echo '<pre>';
-//
-//        echo '<pre>';
-//        var_dump($_POST);
-//        echo '<pre>';
-//
-//        return '<form action="/?foo=bar&amount=250" method="post"><label>Amount</label><input type="text" name="amount"></form>';
-        return 'Home';
+        setcookie(
+            'userName',
+            'Gex',
+            time() + (24 * 60 * 60)
+//            '/',
+//            '',
+//            false,
+//            false
+        );
+        $_SESSION['count'] = ($_SESSION['count'] ?? 0) + 1;
+//        return View::make('index', $_GET)->render();
+        return 'Home ';
     }
 }

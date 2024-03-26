@@ -1,34 +1,24 @@
 <?php
 
-// PHP Sessions & Cookies
+// PHP File Uploads
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
-$router = new App\Router();
+define('STORAGE_PATH', __DIR__ . '/../storage');
 
-//session_start();
+$router = new App\Router();
 
 $router
     ->get('/', [App\Classes\Home::class, 'index'])
+    ->post('/upload', [App\Classes\Home::class, 'upload'])
     ->get('/invoices', [App\Classes\Invoice::class, 'index'])
     ->get('/invoices/create', [App\Classes\Invoice::class, 'create'])
     ->post('/invoices/create', [App\Classes\Invoice::class, 'store']);
 
-//session_start();
 
 echo $router->resolve(
     $_SERVER['REQUEST_URI'],
     strtolower($_SERVER['REQUEST_METHOD'])
 );
-
-//session_start();
-
-//phpinfo();
-
-//echo 1;
-//sleep(3);
-//echo 2;
-
-var_dump($_SESSION);

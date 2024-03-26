@@ -4,23 +4,35 @@ declare(strict_types=1);
 
 namespace App\Classes;
 
-use App\View;
-
 class Home
 {
     public function index(): string
     {
-        setcookie(
-            'userName',
-            'Gex',
-            time() + (24 * 60 * 60)
-//            '/',
-//            '',
-//            false,
-//            false
-        );
-        $_SESSION['count'] = ($_SESSION['count'] ?? 0) + 1;
-//        return View::make('index', $_GET)->render();
-        return 'Home ';
+        return <<<FORM
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="receipt" />
+    <input type="file" name="myimage" />
+    <button type="submit">Upload</button>
+</form>
+FORM;
+    }
+
+    public function upload()
+    {
+        echo '<pre>';
+        var_dump($_FILES);
+        echo '</pre>';
+
+//        $filePath = STORAGE_PATH . '/' . $_FILES['receipt']['name'];
+//
+//        move_uploaded_file(
+//            $_FILES['receipt']['tmp_name'],
+//            $filePath
+//        );
+//
+//        echo '<pre>';
+////        var_dump(pathinfo($_FILES['receipt']['tmp_name']));
+//        var_dump(pathinfo($filePath));
+//        echo '</pre>';
     }
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Exception\ViewNotFoundException;
+use App\Exceptions\ViewNotFoundException;
 
 class View
 {

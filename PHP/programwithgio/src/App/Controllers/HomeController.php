@@ -10,33 +10,25 @@ class HomeController
 {
     public function index(): View
     {
-//        return <<<FORM
-//<form action="/upload" method="post" enctype="multipart/form-data">
-//    <input type="file" name="receipt" />
-//    <input type="file" name="myimage" />
-//    <button type="submit">Upload</button>
-//</form>
-//FORM;
-//        return (new View('index'))->render();
         return View::make('index', ['foo' => 'bar']);
+    }
+
+    public function download()
+    {
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: attachment;filename="myfile.pdf"');
+
+        readfile(STORAGE_PATH . '/receip2.pdf');
     }
 
     public function upload()
     {
-        echo '<pre>';
-        var_dump($_FILES);
-        echo '</pre>';
+        $filePath = STORAGE_PATH . '/' . $_FILES['receipt']['name'];
 
-//        $filePath = STORAGE_PATH . '/' . $_FILES['receipt']['name'];
-//
-//        move_uploaded_file(
-//            $_FILES['receipt']['tmp_name'],
-//            $filePath
-//        );
-//
-//        echo '<pre>';
-////        var_dump(pathinfo($_FILES['receipt']['tmp_name']));
-//        var_dump(pathinfo($filePath));
-//        echo '</pre>';
+        move_uploaded_file($_FILES['receipt']['tmp_name'], $filePath);
+
+        header('Location: /');
+        exit;
+//        unlink(STORAGE_PATH . '/receip2.pdf');
     }
 }

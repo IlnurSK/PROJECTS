@@ -1,8 +1,11 @@
 <?php
 
-// PHP PDO part 1
+// PHP PDO part 2 Transactions - Env Variables & PHPDotEnv
 
 require_once __DIR__ . '/../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
 session_start();
 

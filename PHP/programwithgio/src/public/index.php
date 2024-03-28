@@ -1,6 +1,6 @@
 <?php
 
-// HTTP Headers In PHP
+// PHP PDO part 1
 
 require_once __DIR__ . '/../vendor/autoload.php';
 

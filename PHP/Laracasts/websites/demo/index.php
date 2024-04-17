@@ -1,27 +1,32 @@
-<!--Laracasts - Associative Arrays -->
-
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Demo</title>
-</head>
-<body>
-<h1>
-    Recommended Books
-</h1>
 <?php
+
+declare(strict_types=1);
+
+// Separate PHP Logic From the Template
+
 $books = [
-    "name" => "Do Androids Dream of Electric Sheep",
-    "The Langoliers",
-    "Project Hail Mary",
+    [
+        "name" => "Do Androids Dream of Electric Sheep",
+        'author' => 'Philip K. Dick',
+        'releaseYear' => 1968,
+        'purchaseUrl' => 'http://example.com'
+    ],
+    [
+        "name" => "Project Hail mary",
+        'author' => 'Andy Weir',
+        'releaseYear' => 2021,
+        'purchaseUrl' => 'http://example.com'
+    ],
+    [
+        "name" => "The Martian",
+        'author' => 'Andy Weir',
+        'releaseYear' => 2011,
+        'purchaseUrl' => 'http://example.com'
+    ],
 ];
 
-?>
+$filteredBooks = array_filter($books, function ($book) {
+    return $book['releaseYear'] >= 1950 && $book['releaseYear'] <= 2020;
+});
 
-<p>
-    <?= $books["name"] ?>
-</p>
-
-</body>
-</html>
+require "index.view.php";

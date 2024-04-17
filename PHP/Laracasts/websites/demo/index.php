@@ -1,4 +1,4 @@
-<!--Laracasts - Arrays -->
+<!--Laracasts - Associative Arrays -->
 
 <!doctype html>
 <html lang="en">
@@ -12,20 +12,16 @@
 </h1>
 <?php
 $books = [
-    "Do Androids Dream of Electric Sheep",
+    "name" => "Do Androids Dream of Electric Sheep",
     "The Langoliers",
-    "Hail Mary",
+    "Project Hail Mary",
 ];
 
 ?>
 
-<ul>
-    <?php
-    foreach ($books as $book) : ?>
-        <li><?= $book ?></li>
-    <?php
-    endforeach; ?>
-</ul>
+<p>
+    <?= $books["name"] ?>
+</p>
 
 </body>
 </html>

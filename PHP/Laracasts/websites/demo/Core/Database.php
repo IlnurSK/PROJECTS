@@ -8,7 +8,6 @@ class Database
 
     public function __construct($config, $username = 'root', $password = 'root')
     {
-
         $dsn = 'mysql:' . http_build_query($config, '', ';');
 
         $this->connection = new PDO($dsn, $username, $password, [
@@ -31,13 +30,13 @@ class Database
 
     public function findOrFail()
     {
-       $result = $this->find();
+        $result = $this->find();
 
-       if (! $result) {
-           abort();
-       }
+        if (!$result) {
+            abort();
+        }
 
-       return $result;
+        return $result;
     }
 
     public function get()

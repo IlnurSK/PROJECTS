@@ -42,7 +42,7 @@ if ($user) {
     // если нет, сохраните запись в базе данных и залогиньтесь и перенаправьте страницу
     $db->query('INSERT INTO users(email, password) VALUES(:email, :password)', [
         'email' => $email,
-        'password' => $password
+        'password' => password_hash($password, PASSWORD_BCRYPT)
     ]);
 
     // отметить что пользователь вошел в систему

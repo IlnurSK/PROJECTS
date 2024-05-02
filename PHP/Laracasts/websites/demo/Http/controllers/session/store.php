@@ -3,6 +3,7 @@
 // логиним пользователя если учетные данные совпадают
 
 use Core\Authenticator;
+use Core\Session;
 use Http\Forms\LoginForm;
 
 
@@ -19,12 +20,10 @@ if ($form->validate($email, $password)) {
     $form->error('email', 'No matching account found for that email and password.');
 };
 
-// проверяем соответствие учетных данных
+Session::flash('errors', $form->errors());
 
+return redirect('/login');
 
-return view('session/create.view.php', [
-    'errors' => $form->errors()
-]);
 
 
 

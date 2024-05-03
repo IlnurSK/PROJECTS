@@ -2,6 +2,7 @@
 
 
 use Core\App;
+use Core\Authenticator;
 use Core\Database;
 use Core\Validator;
 
@@ -48,7 +49,7 @@ if ($user) {
     ]);
 
     // отметить что пользователь вошел в систему
-    login($user);
+    (new Authenticator())->attempt($user, $password);
 
     header('location: /');
     exit();

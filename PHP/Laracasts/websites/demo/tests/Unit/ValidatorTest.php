@@ -20,4 +20,4 @@ it('validates an email', function () {
 it('Подтверждает что число больше чем передаваемое число', function () {
     expect(Validator::greaterThan(10, 1))->toBeTrue();
     expect(Validator::greaterThan(10, 100))->toBeFalse();
-})->only();
+});

@@ -33,8 +33,8 @@ class HomeController
 //        var_dump($db1 === $db2, $db2 === $db3, $db1 === $db3);
 //        exit;
 
-        $email = 'Alex@doe.com';
-        $name = 'Alex Doe';
+        $email = 'Alex2@doe.com';
+        $name = 'Alex2 Doe';
         $amount = 25;
 
         $userModel = new User();

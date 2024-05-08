@@ -1,14 +1,11 @@
 <?php
 
-// PHP PDO part 3 - Models & Refactoring
-
 use App\App;
 use App\Config;
+use App\Container;
 use App\Controllers\HomeController;
 use App\Controllers\InvoiceController;
 use App\Router;
-
-//use App\View;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -20,9 +17,9 @@ session_start();
 define('STORAGE_PATH', __DIR__ . '/../storage');
 define('VIEW_PATH', __DIR__ . '/../views');
 
+$container = new Container();
 
-//try {
-$router = new Router();
+$router = new Router($container);
 
 $router
     ->get('/', [HomeController::class, 'index'])
@@ -32,15 +29,6 @@ $router
     ->get('/invoices/create', [InvoiceController::class, 'create'])
     ->post('/invoices/create', [InvoiceController::class, 'store']);
 
-
-//    echo $router->resolve(
-//        $_SERVER['REQUEST_URI'],
-//        strtolower($_SERVER['REQUEST_METHOD'])
-//    );
-//} catch (\App\Exceptions\RouteNotFoundException $e) {
-//    http_response_code(404);
-//    echo View::make('error/404');
-//}
 
 (new App(
     $router,

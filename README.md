@@ -49,6 +49,3 @@
 
 ## Docker
 [A PHP development environment generator built with Docker containers.](https://phpdocker.io/generator)
-
-## Test
-[A PHP development environment generator built with Docker containers.](https://phpdocker.io/generator)

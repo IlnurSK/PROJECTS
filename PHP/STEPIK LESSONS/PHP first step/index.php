@@ -1,21 +1,7 @@
 <?php
-$int1 = 10;
-$int2 = 3;
 
-// Сложение
-echo $int1 + $int2 . "<br>"; // 13
-
-// Вычитание
-echo $int1 - $int2 . "<br>"; // 7
-
-// Умножение
-echo $int1 * $int2 . "<br>"; // 30
-
-// Деление
-echo $int1 / $int2 . "<br>"; // 3.33333333333
-
-// Получение остатка от деления
-echo $int1 % $int2 . "<br>"; // 1
-
-// Возведение в степень
-echo $int1 ** $int2 . "<br>"; // 1000
+$firstStep = readline() + readline() + readline();
+$secondStep = $firstStep * readline();
+$thirdStep = $secondStep - ($secondStep % 10);
+$fourthStep = $thirdStep / 5;
+echo $fourthStep;

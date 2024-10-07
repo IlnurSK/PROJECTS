@@ -1,4 +1,4 @@
 <?php
 
-$myarr = array(readline(),readline(),readline(),readline());
-echo $myarr[readline()];
+$asarr = [readline() => readline(), readline() => readline(), readline() => readline()];
+echo $asarr["Светлана"];

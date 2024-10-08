@@ -1,7 +1,26 @@
 <?php
 
-$str = readline();
-$arr = explode(" ", $str);
-foreach ($arr as $value) {
-    echo $value . PHP_EOL;
+switch (readline()) {
+    case ("Декабрь"):
+    case ("Январь"):
+    case ("Февраль");
+        echo "Зима";
+        break;
+    case ("Март"):
+    case ("Апрель"):
+    case ("Май");
+        echo "Весна";
+        break;
+    case ("Июнь"):
+    case ("Июль"):
+    case ("Август");
+        echo "Лето";
+        break;
+    case ("Сентябрь"):
+    case ("Октябрь"):
+    case ("Ноябрь");
+        echo "Осень";
+        break;
+        default;
+        echo "Такого месяца нет";
 }

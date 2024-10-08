@@ -1,8 +1,7 @@
 <?php
 
-$string = readline();
-$number = readline();
-
-for ($i = 0; $i < $number; $i++ ) {
-    echo $string . "\n";
+$str = readline();
+$arr = explode(" ", $str);
+foreach ($arr as $value) {
+    echo $value . PHP_EOL;
 }

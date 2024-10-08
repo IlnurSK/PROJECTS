@@ -1,13 +1,8 @@
 <?php
 
-$country = readline();
+$string = readline();
+$number = readline();
 
-if ($country == "Великобритания") {
-    echo "Лондон";
-} elseif ($country == "Испания") {
-    echo "Мадрид";
-} elseif ($country == "Китай") {
-    echo "Пекин";
-} else {
-    echo "Это неправильная страна";
+for ($i = 0; $i < $number; $i++ ) {
+    echo $string . "\n";
 }

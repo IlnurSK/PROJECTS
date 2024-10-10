@@ -1,12 +1,8 @@
 <?php
 
-do {
-    $int = readline();
-    if ($int == 10) {
-        break;
-    } elseif (($int == 5) || ($int == 15)) {
-        continue;
-    } else {
-        echo $int . PHP_EOL;
-    }
-} while (true);
+function triple_summ($a, $b, $c)
+{
+    echo $a + $b + $c;
+}
+
+triple_summ(3,4,5);

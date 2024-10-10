@@ -1,11 +1,19 @@
 <?php
 
-function some_times(int $N, string $S)
+function lowest_number(int $x, int $y, int $z)
 {
-    for ($i = 0; $i < $N; $i++) {
-        echo $S . PHP_EOL;
-    }
+  if ($x <= $y && $x <= $z) {
+      return $x;
+  } elseif ($y <= $x && $y <= $z) {
+      return $y;
+  } return $z;
 }
 
-some_times(3,"Весна");
+echo lowest_number(7,10,2);
+echo lowest_number(4,4,1);
+echo lowest_number(3,3,5);
+echo lowest_number(6,7,6);
+
+
+
 

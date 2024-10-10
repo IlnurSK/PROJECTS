@@ -1,8 +1,21 @@
 <?php
 
-function triple_summ($a, $b, $c)
+function win_or_lose($num)
 {
-    echo $a + $b + $c;
+    switch ($num) {
+        case 0:
+            return "Поражение";
+        case 3:
+            return "Победа";
+        case 1:
+            return "Ничья";
+        default:
+            return "Странное число";
+    }
 }
 
-triple_summ(3,4,5);
+echo win_or_lose(3);
+echo win_or_lose(0);
+echo win_or_lose(1);
+echo win_or_lose(2);
+

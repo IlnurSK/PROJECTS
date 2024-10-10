@@ -1,9 +1,10 @@
 <?php
 
-$count = readline();
-$sum = 0;
-
-for ($i = 0; $i < $count; $i++) {
-    $sum += readline();
-}
-echo $sum;
+do {
+    $int = readline();
+    if ($int != 10) {
+        echo $int . PHP_EOL;
+    } else {
+        break;
+    }
+} while (true);

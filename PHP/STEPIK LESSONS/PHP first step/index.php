@@ -1,18 +1,13 @@
 <?php
 
-function lowest_number(int $x, int $y, int $z)
+function unite(string $a, string $b, string $c)
 {
-  if ($x <= $y && $x <= $z) {
-      return $x;
-  } elseif ($y <= $x && $y <= $z) {
-      return $y;
-  } return $z;
+    return $a . " " . $b . " "  . $c;
 }
 
-echo lowest_number(7,10,2);
-echo lowest_number(4,4,1);
-echo lowest_number(3,3,5);
-echo lowest_number(6,7,6);
+echo unite("Я", "изучаю", "PHP");
+
+
 
 
 

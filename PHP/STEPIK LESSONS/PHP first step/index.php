@@ -1,12 +1,10 @@
 <?php
 
-function unite(string $a, string $b, string $c)
-{
-    return $a . " " . $b . " "  . $c;
-}
+$file = fopen("main.php", "a");
 
-echo unite("Я", "изучаю", "PHP");
+fwrite($file,"\necho 'World';");
 
+fclose($file);
 
 
 

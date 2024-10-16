@@ -1,6 +1,8 @@
 <?php
 
-$lines = file("main.txt");
-foreach ($lines as $line) {
-    echo $line;
+class Car {
+    public function soundOfEngine()
+    {
+        echo "Др-др-др";
+    }
 }

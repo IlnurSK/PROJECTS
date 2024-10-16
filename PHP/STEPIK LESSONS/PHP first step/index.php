@@ -2,12 +2,10 @@
 
 class Animal
 {
-    public $kind;
-    public $name;
-
-    public function viewData()
+    public function __construct()
     {
-        echo $this->kind;
-        echo $this->name;
+        echo "Я просто животное";
     }
 }
+
+$cat = new Animal();

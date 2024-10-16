@@ -1,12 +1,6 @@
 <?php
 
-$file = fopen("main.php", "a");
-
-fwrite($file,"\necho 'World';");
-
-fclose($file);
-
-
-
-
-
+$lines = file("main.txt");
+foreach ($lines as $line) {
+    echo $line;
+}

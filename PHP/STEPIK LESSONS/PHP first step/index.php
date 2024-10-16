@@ -1,14 +1,17 @@
 <?php
 
-class Car {
-    public $model;
-    public $color;
-    public $wheels;
-    public $speed;
-    public function sayHello() {
-        echo "Я машина";
+interface Reptile {
+    public function voice();
+}
+
+class Snake implements Reptile
+{
+
+    public function voice()
+    {
+        echo "Ш-ш-ш-ш";
     }
 }
-class Truck extends Car {
 
-}
+$python = new Snake();
+$python->voice();

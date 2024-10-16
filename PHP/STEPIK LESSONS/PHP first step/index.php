@@ -1,8 +1,13 @@
 <?php
 
-class Car {
-    public function soundOfEngine()
+class Animal
+{
+    public $kind;
+    public $name;
+
+    public function viewData()
     {
-        echo "Др-др-др";
+        echo $this->kind;
+        echo $this->name;
     }
 }

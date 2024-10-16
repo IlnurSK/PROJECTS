@@ -1,11 +1,14 @@
 <?php
 
-class Animal
-{
-    public function __destruct()
-    {
-        echo "Увы, мой жизненный цикл окончен";
+class Car {
+    public $model;
+    public $color;
+    public $wheels;
+    public $speed;
+    public function sayHello() {
+        echo "Я машина";
     }
 }
+class Truck extends Car {
 
-$cheetah = new Animal();
+}

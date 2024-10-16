@@ -1,11 +1,13 @@
 <?php
 
-class Animal
-{
-    public function __construct()
-    {
-        echo "Я просто животное";
+class Cars {
+    public $model;
+    public $cost = 12000;
+    public function __construct() {
+        echo 12;
+    }
+    public function __destruct() {
+        echo 21;
     }
 }
-
-$cat = new Animal();
+$bmw = new Cars();

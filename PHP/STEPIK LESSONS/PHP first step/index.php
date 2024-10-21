@@ -1,17 +1,14 @@
 <?php
 
-interface Reptile {
-    public function voice();
-}
-
-class Snake implements Reptile
+class Audi
 {
-
-    public function voice()
+    public static $model = "Q4";
+    public static $color = "Синий";
+    public static function sayYourColor()
     {
-        echo "Ш-ш-ш-ш";
+        return self::$color;
     }
 }
 
-$python = new Snake();
-$python->voice();
+
+echo Audi::sayYourColor();

@@ -1,14 +1,14 @@
 <?php
 
-class Audi
+class Tree
 {
-    public static $model = "Q4";
-    public static $color = "Синий";
-    public static function sayYourColor()
+    public $kind = "Дуб";
+
+    public function viewKind()
     {
-        return self::$color;
+        echo $this->kind;
     }
 }
 
-
-echo Audi::sayYourColor();
+$elk = new Tree();
+$elk->viewKind();

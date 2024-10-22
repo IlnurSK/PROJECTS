@@ -1,6 +1,19 @@
 <?php
 
-$num1 = readline();
-$num2 = readline();
+$countNumbers = readline();
+$countZero = 0;
+$countOdd = 0;
+$countEven = 0;
 
-echo ($num2 % $num1 == 0) ? "Да" : "Нет";
+for ($i = 0; $i < $countNumbers; $i++):
+    $inputNumber = readline();
+if ($inputNumber == 0):
+    $countZero++;
+elseif ($inputNumber % 2 !== 0):
+    $countOdd++;
+else:
+    $countEven++;
+endif;
+endfor;
+
+echo "$countZero $countOdd $countEven";

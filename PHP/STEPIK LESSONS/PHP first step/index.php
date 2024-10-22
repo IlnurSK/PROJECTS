@@ -1,19 +1,22 @@
 <?php
 
-$countNumbers = readline();
-$countZero = 0;
-$countOdd = 0;
-$countEven = 0;
+$startNum = readline();
+$endNum = readline();
+$result = $startNum * $endNum;
 
-for ($i = 0; $i < $countNumbers; $i++):
-    $inputNumber = readline();
-if ($inputNumber == 0):
-    $countZero++;
-elseif ($inputNumber % 2 !== 0):
-    $countOdd++;
-else:
-    $countEven++;
-endif;
-endfor;
 
-echo "$countZero $countOdd $countEven";
+if ($startNum == $endNum) {
+    echo $result;
+} elseif ($startNum < $endNum) {
+    while (($endNum - $startNum - 1) != 0) {
+        $startNum++;
+        $result *= $startNum;
+    }
+    echo $result;
+} elseif ($startNum > $endNum) {
+    while (($startNum - $endNum - 1) != 0) {
+        $endNum++;
+        $result *= $endNum;
+    }
+    echo $result;
+}

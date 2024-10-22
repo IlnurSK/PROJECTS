@@ -1,8 +1,6 @@
 <?php
 
-$inputMeter = readline();
-$foot = $inputMeter / 0.3;
-$yard = $inputMeter / 0.9;
+$num1 = readline();
+$num2 = readline();
 
-echo "$inputMeter метра(ов) это $foot футов." . PHP_EOL;
-echo "$inputMeter метра(ов) это $yard ярдов.";
+echo ($num2 % $num1 == 0) ? "Да" : "Нет";

@@ -1,22 +1,16 @@
 <?php
 
-$startNum = readline();
-$endNum = readline();
-$result = $startNum * $endNum;
+$inputNum = readline();
+$countLastNums = readline();
 
+$calcNum = $inputNum % (10**$countLastNums);
 
-if ($startNum == $endNum) {
-    echo $result;
-} elseif ($startNum < $endNum) {
-    while (($endNum - $startNum - 1) != 0) {
-        $startNum++;
-        $result *= $startNum;
-    }
-    echo $result;
-} elseif ($startNum > $endNum) {
-    while (($startNum - $endNum - 1) != 0) {
-        $endNum++;
-        $result *= $endNum;
-    }
-    echo $result;
+$resMul = 1;
+$resPlus = 0;
+$pointer = 0;
+for ($i = 1; $i <= $countLastNums; $i++) {
+    $pointer = (($calcNum % (10**$i)) - ($calcNum % (10**($i - 1))))/10**($i - 1);
+    $resMul *= $pointer;
+    $resPlus += $pointer;
 }
+echo "$resPlus $resMul";

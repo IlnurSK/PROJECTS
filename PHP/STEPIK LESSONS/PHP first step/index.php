@@ -1,26 +1,8 @@
 <?php
 
-function number_of_days(int $month)
+function sum_of_numbers_more(int $num1, int $num2)
 {
-    switch ($month) {
-        case 1:
-        case 3:
-        case 5:
-        case 7:
-        case 8:
-        case 10:
-        case 12:
-            return 31;
-        case 2:
-            return 28;
-        case 4:
-        case 6:
-        case 9:
-        case 11:
-            return 30;
-        default:
-            return "Такого месяца нет";
-    }
+    return array_sum(str_split($num1)) > array_sum(str_split($num2)) ? $num1 : $num2;
 }
 
-echo number_of_days(0);
+echo sum_of_numbers_more(99,11111);

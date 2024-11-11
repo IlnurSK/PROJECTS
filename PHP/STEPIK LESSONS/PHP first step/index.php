@@ -1,15 +1,8 @@
 <?php
 
-function rectangle(int $int1, int $int2)
+function triangle_square(int $length, int $height)
 {
-    $array = [];
-    while ($int1--) {
-        array_push($array,'*');
-    }
-    $line = implode(" ", $array);
-    while ($int2--) {
-        echo "$line\n";
-    }
+    return 1/2 * $length * $height;
 }
 
-rectangle(4,4);
+echo triangle_square(11,4);

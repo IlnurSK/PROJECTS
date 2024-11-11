@@ -1,8 +1,9 @@
 <?php
 
-function sum_of_numbers_more(int $num1, int $num2)
+function variable_amount(int ...$numbers)
 {
-    return array_sum(str_split($num1)) > array_sum(str_split($num2)) ? $num1 : $num2;
+    return count($numbers);
+
 }
 
-echo sum_of_numbers_more(99,11111);
+echo variable_amount(4,5,2,1,6);

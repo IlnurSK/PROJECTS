@@ -1,5 +1,15 @@
 <?php
 
-$numbers = "5 10 15 20 25";
-$array = explode(" ",$numbers);
-print_r($array);
+function rectangle(int $int1, int $int2)
+{
+    $array = [];
+    while ($int1--) {
+        array_push($array,'*');
+    }
+    $line = implode(" ", $array);
+    while ($int2--) {
+        echo "$line\n";
+    }
+}
+
+rectangle(4,4);

@@ -22,15 +22,48 @@
 //$time = "5 a.m.";
 //echo "PHP 5.6 " . " conference at " . "${time}" ;
 
-$string = "PHP56_testing";
-
-echo preg_match("/^[A-Za-z0-9]*$/", $string);
-echo preg_match("/56_test/", $string);
-echo preg_match("/^PHP(\w)*/", $string);
-echo preg_match("/^(\w)$/", $string);
-echo preg_match("/[0-9]+$/", $string);
+//$string = "PHP56_testing";
+//
+//echo preg_match("/^[A-Za-z0-9]*$/", $string);
+//echo preg_match("/56_test/", $string);
+//echo preg_match("/^PHP(\w)*/", $string);
+//echo preg_match("/^(\w)$/", $string);
+//echo preg_match("/[0-9]+$/", $string);
 //
 //echo array("Hello", "World");
+
+//class Car {
+//    static $model = 'машина';
+//    static $action = 'зажигание';
+//    static function  makeSounds()
+//    {
+//        echo self::makeSound() . ',';
+//        echo static::makeSound() . PHP_EOL;
+//    }
+//
+//    static function makeSound()
+//    {
+//        echo static::$model . ': ' . static::$action;
+//    }
+//}
+//class ProtectedCar extends Car {
+//    static $model = 'машина с защитой';
+//    static $action = 'сигнализация';
+//    static function makeSound()
+//    {
+//        echo static::$model . ': ' . " снятие с сигнализации";
+//    }
+//}
+//
+//ProtectedCar::makeSounds();
+
+class MyClass {
+    public function _set($name, $value)
+    {
+        echo "property: {$name}{$value}\n";
+    }
+}
+
 
 
 

@@ -57,14 +57,23 @@
 //
 //ProtectedCar::makeSounds();
 
-class MyClass {
-    public function _set($name, $value)
-    {
-        echo "property: {$name}{$value}\n";
-    }
-}
+//class MyClass {
+//    public function _set($name, $value)
+//    {
+//        echo "property: {$name}{$value}\n";
+//    }
+//}
 
+$sql = "1; DROP TABLE users";
+$test = (int) $sql;
+echo $test;
 
+//$id_user = (int)$_POST["id_user"];
+//
+//$db = getConection();
+//$id_user = $_POST["id_user"];
+//$sql = "SELECT * FROM user WHERE id_user = " . $id_user;
+//$result = executeQuery($db,$sql);
 
 
 

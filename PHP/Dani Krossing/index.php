@@ -64,9 +64,9 @@
 //    }
 //}
 
-$sql = "1; DROP TABLE users";
-$test = (int) $sql;
-echo $test;
+//$sql = "1; DROP TABLE users";
+//$test = (int) $sql;
+//echo $test;
 
 //$id_user = (int)$_POST["id_user"];
 //
@@ -75,5 +75,23 @@ echo $test;
 //$sql = "SELECT * FROM user WHERE id_user = " . $id_user;
 //$result = executeQuery($db,$sql);
 
+class One {
+    function foo()
+    {
+        echo "Hello from class One!";
+    }
+    function callMe()
+    {
+        $this->foo();
+    }
+}
+class Two extends One {
+    function foo()
+    {
+        echo "Hello from class Two";
+    }
+}
+$two = new Two();
+$two->callMe();
 
 

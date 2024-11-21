@@ -75,23 +75,53 @@
 //$sql = "SELECT * FROM user WHERE id_user = " . $id_user;
 //$result = executeQuery($db,$sql);
 
-class One {
-    function foo()
-    {
-        echo "Hello from class One!";
-    }
-    function callMe()
-    {
-        $this->foo();
-    }
-}
-class Two extends One {
-    function foo()
-    {
-        echo "Hello from class Two";
-    }
-}
-$two = new Two();
-$two->callMe();
+//class One {
+//    function foo()
+//    {
+//        echo "Hello from class One!";
+//    }
+//    function callMe()
+//    {
+//        $this->foo();
+//    }
+//}
+//class Two extends One {
+//    function foo()
+//    {
+//        echo "Hello from class Two";
+//    }
+//}
+//$two = new Two();
+//$two->callMe();
+
+//preg_match('/(foo)(bar)/', 'foobar', $matches);
+//print_r($matches);
+
+//$pattern = "/\d+/";
+//$subject = "Мои числа: 10, 20, 30.";
+//
+//preg_match_all($pattern, $subject, $matches);
+//print_r($matches);
+
+//$pattern = "/(\d+)-(\w+)/";
+//$subject = "ID1-itemA, ID2-itemB, ID3-itemC";
+//
+//preg_match_all($pattern, $subject, $matches, PREG_SET_ORDER);
+//
+//echo '<pre>';
+//print_r($matches);
+//echo '</pre>';
+
+//$matches = preg_split('/(\d)/', 'a1b2c3');
+//print_r($matches);
+
+$matches = preg_split('/(?=[A-Z])/', 'HelloWorld');
+echo '<pre>';
+print_r($matches);
+echo '</pre>';
+
+
+
+
 
 

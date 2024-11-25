@@ -156,79 +156,111 @@
 //echo "Собака по имени {$dog->getName()}: {$dog->speak()}" . "<br>";
 //echo "Кошка по имени {$cat->getName()}: {$cat->speak()}";
 
-abstract class Shape
-{
-    protected $color;
+//declare(strict_types=1);
+//abstract class Shape
+//{
+//    protected $color;
+//
+//    public function __construct(string $color)
+//    {
+//        $this->color = $color;
+//    }
+//
+//    // Метод для вычисления площади фигуры
+//    abstract function area(): float;
+//
+//    // Метод для форматирования площади с 2 знаками после запятой
+//    public function formatArea(): string
+//    {
+//        return number_format($this->area(), 2);
+//    }
+//}
+//interface Drawable
+//{
+//    // Метод для рисования фигуры
+//    public function draw();
+//
+//}
+//
+//class Rectangle extends Shape implements Drawable
+//{
+//    protected $width;
+//    protected $height;
+//
+//    public function __construct(string $color, float $width, float $height)
+//    {
+//        parent::__construct($color);
+//        $this->setWidth($width);
+//        $this->setHeight($height);
+//    }
+//
+//    public function area(): float
+//    {
+//        // Рассчитываем площадь прямоугольника
+//        return $this->width * $this->height;
+//    }
+//
+//    public function draw()
+//    {
+//        // Отображаем информацию о прямоугольнике и его площади
+//        echo "Прямоугольник, цвет: " . $this->color . ", площадь: " . $this->formatArea() . "<br>";
+//    }
+//
+//    public function setWidth(float $width)
+//    {
+//        if ($width < 0) {
+//            throw new InvalidArgumentException("Ширина должна быть неотрицательной.");
+//        }
+//        $this->width = $width;
+//        return $this;
+//    }
+//
+//    public function setHeight(float $height)
+//    {
+//        if ($height < 0) {
+//            throw new InvalidArgumentException("Высота должна быть неотрицательной.");
+//        }
+//        $this->height = $height;
+//        return $this;
+//    }
+//}
+//
+//class Circle extends Shape implements Drawable
+//{
+//    protected $radius;
+//    public function __construct(string $color, float $radius)
+//    {
+//        parent::__construct($color);
+//        $this->setRadius($radius);
+//    }
+//
+//    public function area(): float
+//    {
+//        // Рассчитываем площадь круга
+//        return pi() * pow($this->radius,2);
+//    }
+//
+//    public function draw()
+//    {
+//        // Отображаем информацию о круге и его площади
+//        echo "Круг, цвет: " . $this->color . ", площадь: " . $this->formatArea() . "<br>";
+//    }
+//
+//    public function setRadius(float $radius)
+//    {
+//        if ($radius < 0) {
+//            throw new InvalidArgumentException("Радиус должен быть неотрицательным.");
+//        }
+//        $this->radius = $radius;
+//        return $this;
+//    }
+//}
+//
+//// Создаем объекты и отображаем их
+//$rectangle = new Rectangle("красный", 10, 2);
+//$circle = new Circle("синий",3);
+//
+//$rectangle->draw();
+//$circle->draw();
 
-    public function __construct($color)
-    {
-        $this->color = $color;
-    }
-
-    abstract function area();
-}
-
-class Rectangle extends Shape implements Drawable
-{
-    protected $width;
-    protected $height;
-
-    public function __construct($color, $width, $height)
-    {
-        parent::__construct($color);
-        $this->width = $width;
-        $this->height = $height;
-    }
-
-    public function area()
-    {
-        return $this->width * $this->height;
-    }
-
-    public function draw()
-    {
-        echo "Прямоугольник, цвет: {$this->color}, площадь: {$this->area()}" . "<br>";
-    }
-
-    public function setWidth($width)
-    {
-        $this->width = $width;
-    }
-
-    public function setHeight($height)
-    {
-        $this->height = $height;
-    }
-}
-
-class Circle extends Shape implements Drawable
-{
-    protected $radius;
-    public function __construct($color, $radius)
-    {
-        parent::__construct($color);
-        $this->radius = $radius;
-    }
-
-    public function area()
-    {
-        return pi() * pow($this->radius,2);
-    }
-
-    public function draw()
-    {
-        echo "Круг, цвет: {$this->color}, площадь: " . number_format($this->area(), 2) . "<br>";
-    }
-}
-
-interface Drawable
-{
-    public function draw();
-}
-
-$rectangle = new Rectangle("красный", 10, 2);
-$circle = new Circle("синий",3);
-
-$rectangle->draw();
-$circle->draw();
 

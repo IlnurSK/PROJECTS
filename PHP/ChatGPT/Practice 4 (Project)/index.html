@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Интерактивный калькулятор</title>
+</head>
+<body>
+<form  method="post" action="calculator.php">
+    Число 1: <label for="num1">
+    <input type="number" name="num1" id="num1" step="any" required>
+</label><br>
+    Число 2: <label for="num2">
+    <input type="number" name="num2" id="num2" step="any" required>
+</label><br>
+    Операция:
+    <label for="operation">
+        <select name="operation" id="operation">
+            <option value="+">Сложение</option>
+            <option value="-">Вычитание</option>
+            <option value="*">Умножение</option>
+            <option value="/">Деление</option>
+        </select>
+    </label><br>
+    <input type="submit" value="Вычислить">
+</form>
+</body>
+</html>

@@ -200,7 +200,7 @@ abstract class Shape
 interface Drawable
 {
     // Метод для рисования фигуры (отображения)
-    public function draw();
+    public function draw(): void;
 
 }
 

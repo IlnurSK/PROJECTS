@@ -1,19 +1,27 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Models\Job;
+
 
 Route::get('/', function () {
     return view('home');
 });
 
-//// Можно вернуть массив (полезно для использования API, данные передаются в виде массива
-//Route::get('/about', function () {
-//    return ['foo' => 'bar'];
-//});
 
-// Создание маршрута /about, который возвращает представление about
-Route::get('/about', function () {
-    return view('about');
+// Создание маршрута /jobs, который возвращает представление jobs
+Route::get('/jobs', function () {
+    return view('jobs',[
+        'jobs' => Job::all()
+    ]);
+});
+
+Route::get('/jobs/{id}', function ($id){
+
+    $job = Job::find($id);
+
+    return view('job', ['job' => $job]);
+
 });
 
 // Практика: создание маршрута страницы контактов

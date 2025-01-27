@@ -2,38 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
 
-class Job {
-    public static function all(): array
-    {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Director',
-                'salary' => '$50,000'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Programmer',
-                'salary' => '10,000'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Teacher',
-                'salary' => '40,000'
-            ]
-        ];
-    }
+class Job extends Model { // Eloquent автоматически будет искать таблицу JOBS в БД (которое занята по дефолту), в нашем случае она называется jobs_listings, поэтому класс можно переименовать например в JobListing (в ед. числе), ну или альтернативный вариант
+    protected $table = 'job_listings'; // алть. вариант - указание кокретной таблицы через $table = 'table_name
 
-    public static function find(int $id): array
-    {
-        $job = Arr::first(static::all(), fn($job) => $job['id'] == $id);
+    // задание атрибутов которые можно заполнять массово
+    protected $fillable = ['title', 'salary'];
 
-        if (! $job) {
-            abort(404);
-        }
-
-        return $job;
-    }
 }

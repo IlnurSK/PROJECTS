@@ -24,6 +24,12 @@ class Job extends Model
         return $this->belongsTo(Employer::class);
     }
 
+    public function tags()
+    {
+        // foreignPivotKey - явно указывает имя внешнего столбца, по дефолту Laravel будет искать в job_id
+        return $this->belongsToMany(Tag::class, foreignPivotKey: "job_listing_id");
+    }
+
 }
 
 

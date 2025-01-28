@@ -5,6 +5,11 @@ use App\Models\Job;
 
 
 Route::get('/', function () {
+
+//    $jobs = Job::all();
+//    dd($jobs); // отображение объекта с данными из БД
+//    dd($jobs[0]->title); // отображение конкретного значения из объекта с данными с БД
+
     return view('home');
 });
 

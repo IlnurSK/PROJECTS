@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('job_listings', function (Blueprint $table) {
             $table->id();
+            // foreign id called employer_id. Внешний ключ может быть большим неподписанным числом, поэтому лучше выбирать этот тип
+//            $table->unsignedBigInteger('employer_id');
+            // Альтернативно можно указать сразу на модель следующим образом
+            $table->foreignIdFor(\App\Models\Employer::class);
             $table->string('title');
             $table->string('salary');
             $table->timestamps();

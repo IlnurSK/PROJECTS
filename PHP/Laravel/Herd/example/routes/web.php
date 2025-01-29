@@ -16,8 +16,14 @@ Route::get('/', function () {
 
 // Создание маршрута /jobs, который возвращает представление jobs
 Route::get('/jobs', function () {
+
+//     $jobs = Job::all(); // Стандартное использование c ленивой (отложенной загрузкой)
+
+    // Решение проблемы N+1 использование жадной загрузки через оператор WITH
+    $jobs = Job::with('employer')->get();
+
     return view('jobs',[
-        'jobs' => Job::all()
+        'jobs' => $jobs
     ]);
 });
 

@@ -12,5 +12,10 @@
                 </div>
             </a>
         @endforeach
+
+{{--Добавление ссылки для PAGINATION--}}
+        <div>
+            {{ $jobs->links() }}
+        </div>
     </div>
 </x-layout>

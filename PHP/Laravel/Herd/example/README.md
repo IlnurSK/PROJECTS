@@ -1,0 +1,53 @@
+# Документация по обучению Laravel
+
+## Команды терминала, вводятся в директории проекта Laravel
+`laravel new example` - создать новый проект где `example` имя проекта.
+
+`php artisan` - мощный консольный инструмент Laravel, данная команда выведет список всех доступных команд
+
+`php artisan help command_name` - получить справку по команде, где вместо command_name нужно указать необходимую комманду 
+
+`php artisan serve` - запуск локального сервера с проектом
+
+`php artisan db:show` - вывести все таблицы БД с данным проектом
+
+`php artisan make:model Model_name` - создать новую модель, где Model_name - имя новой модели
+
+`php artisan make:model Model_name -m` - та же комманда что и в строке выше, но с опцией `-m` которая сразу же создаст файл миграции для данной модели
+
+`php artisan migrate` - провести миграции таблиц БД, если их нет, то создаст стандартные таблицы
+
+`php artisan migrate:refresh` - сбросить строки в таблицах и перезапустить все миграции в БД
+
+`php artisan migrate:rollback` - откат на прошлую миграцию
+
+`php artisan migrate:fresh` - удалить все таблицы и перезапустить все миграции
+
+`php artisan make:migration name` - создание нового файла миграции, где `name` - название для миграции, например можно указать `create_test_table` - для создании таблицы `test`
+
+`php artisan make:factory JobFactory` - создание фабрики для модели Job
+
+`php artisan tinker` - терминальная PHP песочница для приложения Laravel, позволяет взаимодействовать с проектом напрямую используя стандартные PHP команды 
+
+## PHP ARTISAN TINKER (командны которые использовались в данной теме обучения)
+
+`App\Models\Job::create(['title' => 'Acme Director', 'salary' => '$1,000,000']);` - добавление в модель Job новой строки с `title` = `Acme Director`, `salary` = `$1,000,000`
+
+`App\Models\Job::all()` - вернуть все строки с модели Job
+
+`App\Models\Job::find(id)` - вернуть строку с модели Job,где вместо `id` можно указать `id `нужной строки
+
+`App\Models\Job::find(7)->delete();` - удалить строку с модели Job с `id` = 7
+
+`App\Models\User::factory()->create();` - использовать фабрику для создании строки в модели User
+
+`App\Models\User::factory(100)->create();` - добавив параметр в `factory(100)`, можно сгенерировать сразу необходимое количество строк в модели (100)
+
+`App\Models\User::factory()->unverified()->create();` - использовать фабрику для элементов с другим состояним (state), которое описывается в методе `unverified()` фабрики
+
+
+
+
+
+
+

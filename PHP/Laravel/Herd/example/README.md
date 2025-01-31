@@ -71,6 +71,8 @@
 
 `$tag->jobs()->get()->pluck('title');` - метод pluck('title') - указывает на конкретный столбец в необходимой модели
 
+`$jobs = Job::with('employer')->latest()->cursorPaginate(3);` - метод latest() отсортирует по метке создания записи
+
 
 
 

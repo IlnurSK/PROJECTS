@@ -2,38 +2,34 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Arr;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Job {
-    public static function all(): array
+class Job extends Model
+{
+    use HasFactory;
+
+    // Подключение библиотеки Фабрики (для генерации данных)
+
+    // Eloquent автоматически будет искать таблицу JOBS в БД (которое занята по дефолту), в нашем случае она называется jobs_listings, поэтому класс можно переименовать например в JobListing (в ед. числе), ну или альтернативный вариант
+    protected $table = 'job_listings'; // алть. вариант - указание кокретной таблицы через $table = 'table_name
+
+    // задание атрибутов которые можно заполнять массово
+    protected $fillable = ['title', 'salary'];
+
+
+// Подключение внешнего ключа - отношения с таблицей Employer
+    public function employer()
     {
-        return [
-            [
-                'id' => 1,
-                'title' => 'Director',
-                'salary' => '$50,000'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Programmer',
-                'salary' => '10,000'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Teacher',
-                'salary' => '40,000'
-            ]
-        ];
+        return $this->belongsTo(Employer::class);
     }
 
-    public static function find(int $id): array
+    public function tags()
     {
-        $job = Arr::first(static::all(), fn($job) => $job['id'] == $id);
-
-        if (! $job) {
-            abort(404);
-        }
-
-        return $job;
+        // foreignPivotKey - явно указывает имя внешнего столбца, по дефолту Laravel будет искать в job_id
+        return $this->belongsToMany(Tag::class, foreignPivotKey: "job_listing_id");
     }
+
 }
+
+

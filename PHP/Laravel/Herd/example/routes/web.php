@@ -40,6 +40,12 @@ Route::post('/jobs', function () {
 //   dd('hello from the post request');
 //    dd(request()->all());
 
+    // запуск валидации для проверки введенных данных
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+    ]);
+
     // использование Laravel для получения данных из POST и передача в модель
     Job::create([
         'title' => request('title'),

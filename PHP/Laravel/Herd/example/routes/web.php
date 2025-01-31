@@ -1,65 +1,43 @@
 <?php
 
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use App\Models\Job;
+
 
 Route::get('/', function () {
+//    $jobs = Job::all();
+//    dd($jobs); // отображение объекта с данными из БД
+//    dd($jobs[0]->title); // отображение конкретного значения из объекта с данными с БД
+
     return view('home');
 });
 
-//// Можно вернуть массив (полезно для использования API, данные передаются в виде массива
-//Route::get('/about', function () {
-//    return ['foo' => 'bar'];
-//});
 
 // Создание маршрута /jobs, который возвращает представление jobs
 Route::get('/jobs', function () {
-    return view('jobs',[
-//        'greeting' => 'Hello', // эквивалент создания переменной $greeting = 'Hello'
-//        'name' => 'Yuriy Borisov'
-        'jobs' => [
-            [
-                'id' => 1,
-                'title' => 'Director',
-                'salary' => '$50,000'
-            ],
-            [
-                'id' => 2,
-                'title' => 'Programmer',
-                'salary' => '10,000'
-            ],
-            [
-                'id' => 3,
-                'title' => 'Teacher',
-                'salary' => '40,000'
-            ]
-        ]
+//     $jobs = Job::all(); // Стандартное использование c ленивой (отложенной загрузкой)
+
+    // Решение проблемы N+1 использование жадной загрузки через оператор WITH
+//    $jobs = Job::with('employer')->get();
+
+    // Использование метода PAGINATE для разбивки вывода на страницы
+//    $jobs = Job::with('employer')->paginate(3);
+
+    // Использование метода SIMPLEPAGINATE для разбивки вывода на страницы, но без счетчика страниц (уменьшает запросы к БД)
+//    $jobs = Job::with('employer')->simplePaginate(3);
+
+    // Использование метода CURSORPAGINATE для разбивки вывода на страницы, но с курсорным указанием страниц (уменьшает запросы к БД), самый эффективный метод, но невозможно переключать страницы вручную через URL
+    $jobs = Job::with('employer')->cursorPaginate(3);
+
+    return view('jobs', [
+        'jobs' => $jobs
     ]);
 });
 
 Route::get('/jobs/{id}', function ($id) {
-    $jobs = [
-        [
-            'id' => 1,
-            'title' => 'Director',
-            'salary' => '$50,000'
-        ],
-        [
-            'id' => 2,
-            'title' => 'Programmer',
-            'salary' => '10,000'
-        ],
-        [
-            'id' => 3,
-            'title' => 'Teacher',
-            'salary' => '40,000'
-        ]
-    ];
-
-    $job = Arr::first($jobs, fn($job) => $job['id'] == $id);
+    $job = Job::find($id);
 
     return view('job', ['job' => $job]);
-
 });
 
 // Практика: создание маршрута страницы контактов

@@ -5,10 +5,6 @@ use App\Models\Job;
 
 
 Route::get('/', function () {
-//    $jobs = Job::all();
-//    dd($jobs); // отображение объекта с данными из БД
-//    dd($jobs[0]->title); // отображение конкретного значения из объекта с данными с БД
-
     return view('home');
 });
 
@@ -23,12 +19,12 @@ Route::get('/jobs', function () {
     ]);
 });
 
-// При создании следующего маршрута, он не будет работать если будет стоять после маршрута Route::get('/jobs/{id}'
+// Страница создания вакансии. При создании следующего маршрута, он не будет работать если будет стоять после маршрута Route::get('/jobs/{id}'
 Route::get('/jobs/create', function () {
-//    dd('hello there');
     return view('jobs.create');
 });
 
+// Страница вакансии
 Route::get('/jobs/{id}', function ($id) {
     $job = Job::find($id);
 
@@ -37,8 +33,6 @@ Route::get('/jobs/{id}', function ($id) {
 
 // Создание маршрута для POST метода для модели JOB
 Route::post('/jobs', function () {
-//   dd('hello from the post request');
-//    dd(request()->all());
 
     // запуск валидации для проверки введенных данных
     request()->validate([
@@ -53,6 +47,52 @@ Route::post('/jobs', function () {
         'employer_id' => 1
     ]);
 
+    return redirect('/jobs');
+});
+
+// Форма для редактирования вакансии
+Route::get('/jobs/{id}/edit', function ($id) {
+    $job = Job::find($id);
+
+    return view('jobs.edit', ['job' => $job]);
+});
+
+// Страница обновления вакансии
+Route::patch('/jobs/{id}', function ($id) {
+    // Валидация
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+    ]);
+
+    // Авторизация
+
+    // Обновить вакансию
+    $job = Job::findOrFail($id); // Если $id не найдется в БД, будет выброшено исключение. Для этого используется метод findOrFail
+
+    // стандартный метод
+//    $job->title = request('title');
+//    $job->salary = request('salary');
+//    $job->save();
+
+    // альтернативный метод
+    $job->update([
+        'title' => request('title'),
+        'salary' => request('salary'),
+    ]);
+
+    // Перенаправление на страницу с вакансией
+    return redirect('/jobs/' . $job->id);
+});
+
+// Страница удаления вакансии
+Route::delete('/jobs/{id}', function ($id) {
+    // авторизация
+
+    // удаление вакансии
+    Job::findOrFail($id)->delete();
+
+    // перенаправление на страницу с вакансиями
     return redirect('/jobs');
 });
 

@@ -1,33 +1,19 @@
 # Документация по обучению Laravel
 
-## SQLite команды для БД
-
-`PRAGMA foreign_keys=on` - включает поддержку внешних ключей (foreign keys). Внешние ключи используются для обеспечения целостности данных между связанными таблицами в реляционных базах данных (по умолчанию выключена)
-
-## DebugBar Laravel - панель отладки для проекта
-
-`composer require barryvdh/laravel-debugbar --dev` - установка отладочной панели через composer в проект, конфигурирование происходит в файле .env, константа APP_DEBUG=true/false
-
 ## Команды терминала, вводятся в директории проекта Laravel
 `laravel new example` - создать новый проект где `example` имя проекта.
 
 `php artisan` - мощный консольный инструмент Laravel, данная команда выведет список всех доступных команд
 
-`php artisan help command_name` - получить справку по команде, где вместо command_name нужно указать необходимую команду 
-
 `php artisan serve` - запуск локального сервера с проектом
 
 `php artisan db:show` - вывести все таблицы БД с данным проектом
-
-`php artisan make:model Model_name` - создать новую модель, где Model_name - имя новой модели
-
-`php artisan make:model Model_name -m` - та же команда, что и в строке выше, но с опцией `-m` которая сразу же создаст файл миграции для данной модели
 
 `php artisan migrate` - провести миграции таблиц БД, если их нет, то создаст стандартные таблицы
 
 `php artisan migrate:refresh` - сбросить строки в таблицах и перезапустить все миграции в БД
 
-`php artisan migrate:rollback` - откат на последнюю миграцию
+`php artisan migrate:rollback` - откат на прошлую миграцию
 
 `php artisan migrate:fresh` - удалить все таблицы и перезапустить все миграции
 
@@ -72,11 +58,6 @@
 `$tag->jobs()->get()->pluck('title');` - метод pluck('title') - указывает на конкретный столбец в необходимой модели
 
 `$jobs = Job::with('employer')->latest()->cursorPaginate(3);` - метод latest() отсортирует по метке создания записи
-
-
-
-
-
 
 
 

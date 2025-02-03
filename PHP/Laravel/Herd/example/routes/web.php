@@ -15,30 +15,47 @@ Route::get('/', function () {
 
 // Создание маршрута /jobs, который возвращает представление jobs
 Route::get('/jobs', function () {
-//     $jobs = Job::all(); // Стандартное использование c ленивой (отложенной загрузкой)
 
-    // Решение проблемы N+1 использование жадной загрузки через оператор WITH
-//    $jobs = Job::with('employer')->get();
+    $jobs = Job::with('employer')->latest()->cursorPaginate(3);
 
-    // Использование метода PAGINATE для разбивки вывода на страницы
-//    $jobs = Job::with('employer')->paginate(3);
-
-    // Использование метода SIMPLEPAGINATE для разбивки вывода на страницы, но без счетчика страниц (уменьшает запросы к БД)
-//    $jobs = Job::with('employer')->simplePaginate(3);
-
-    // Использование метода CURSORPAGINATE для разбивки вывода на страницы, но с курсорным указанием страниц (уменьшает запросы к БД), самый эффективный метод, но невозможно переключать страницы вручную через URL
-    $jobs = Job::with('employer')->cursorPaginate(3);
-
-    return view('jobs', [
+    return view('jobs.index', [
         'jobs' => $jobs
     ]);
+});
+
+// При создании следующего маршрута, он не будет работать если будет стоять после маршрута Route::get('/jobs/{id}'
+Route::get('/jobs/create', function () {
+//    dd('hello there');
+    return view('jobs.create');
 });
 
 Route::get('/jobs/{id}', function ($id) {
     $job = Job::find($id);
 
-    return view('job', ['job' => $job]);
+    return view('jobs.show', ['job' => $job]);
 });
+
+// Создание маршрута для POST метода для модели JOB
+Route::post('/jobs', function () {
+//   dd('hello from the post request');
+//    dd(request()->all());
+
+    // запуск валидации для проверки введенных данных
+    request()->validate([
+        'title' => ['required', 'min:3'],
+        'salary' => ['required']
+    ]);
+
+    // использование Laravel для получения данных из POST и передача в модель
+    Job::create([
+        'title' => request('title'),
+        'salary' => request('salary'),
+        'employer_id' => 1
+    ]);
+
+    return redirect('/jobs');
+});
+
 
 // Практика: создание маршрута страницы контактов
 Route::get('/contact', function () {

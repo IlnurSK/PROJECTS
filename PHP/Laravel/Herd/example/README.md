@@ -83,6 +83,12 @@
 
 `php artisan make:controller SessionController` - создаем контроллер для логирования пользователей
 
+`$user = new App\Models\User;` - создаем пользователя
+
+`$user->password = 'password';` - вводим поле пароля
+
+
+
 
 
 

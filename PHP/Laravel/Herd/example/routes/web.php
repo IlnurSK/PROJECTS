@@ -1,63 +1,37 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
-use App\Models\Job;
 
+//Route::get('/', function () {
+//    return view('home');
+//});
+// Обновление метода отображения home страницы через view
+Route::view('/', 'home');
 
-Route::get('/', function () {
-//    $jobs = Job::all();
-//    dd($jobs); // отображение объекта с данными из БД
-//    dd($jobs[0]->title); // отображение конкретного значения из объекта с данными с БД
+// Группировка всех маршрутов ресурса Job
+//Route::controller(JobController::class)->group(function () {
+//    // Index.
+//    Route::get('/jobs', 'index');
+//    // Create.
+//    Route::get('/jobs/create', 'create');
+//    // Show.
+//    Route::get('/jobs/{job}', 'show');
+//    // Store.
+//    Route::post('/jobs', 'store');
+//    // Edit.
+//    Route::get('/jobs/{job}/edit', 'edit');
+//    // Update.
+//    Route::patch('/jobs/{job}', 'update');
+//    // Destroy.
+//    Route::delete('/jobs/{job}', 'destroy');
+//});
 
-    return view('home');
-});
-
-
-// Создание маршрута /jobs, который возвращает представление jobs
-Route::get('/jobs', function () {
-
-    $jobs = Job::with('employer')->latest()->cursorPaginate(3);
-
-    return view('jobs.index', [
-        'jobs' => $jobs
-    ]);
-});
-
-// При создании следующего маршрута, он не будет работать если будет стоять после маршрута Route::get('/jobs/{id}'
-Route::get('/jobs/create', function () {
-//    dd('hello there');
-    return view('jobs.create');
-});
-
-Route::get('/jobs/{id}', function ($id) {
-    $job = Job::find($id);
-
-    return view('jobs.show', ['job' => $job]);
-});
-
-// Создание маршрута для POST метода для модели JOB
-Route::post('/jobs', function () {
-//   dd('hello from the post request');
-//    dd(request()->all());
-
-    // запуск валидации для проверки введенных данных
-    request()->validate([
-        'title' => ['required', 'min:3'],
-        'salary' => ['required']
-    ]);
-
-    // использование Laravel для получения данных из POST и передача в модель
-    Job::create([
-        'title' => request('title'),
-        'salary' => request('salary'),
-        'employer_id' => 1
-    ]);
-
-    return redirect('/jobs');
-});
-
+// Группировка всех маршрутов с помощью метода resource, по стандарту RESTful
+Route::resource('jobs', JobController::class);
 
 // Практика: создание маршрута страницы контактов
-Route::get('/contact', function () {
-    return view('contact');
-});
+//Route::get('/contact', function () {
+//    return view('contact');
+//});
+Route::view('/contact', 'contact');

@@ -65,6 +65,16 @@
 
 `$jobs = Job::with('employer')->latest()->cursorPaginate(3);` - метод latest() отсортирует по метке создания записи
 
+`php artisan make:controller RegisteredUserController` - создаем контроллер для регистрации пользователей
+
+`php artisan make:controller SessionController` - создаем контроллер для логирования пользователей
+
+`$user = new App\Models\User;` - создаем пользователя
+
+`$user->password = 'password';` - вводим поле пароля
+
+
+
 
 
 

@@ -3,16 +3,23 @@
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
+use App\Jobs\TranslateJob;
+use App\Models\Job;
 use Illuminate\Support\Facades\Route;
 
-// Тестовая реализация маршрута отправки письма
-//Route::get('test', function () {
-////    return new \App\Mail\JobPosted();
-//    \Illuminate\Support\Facades\Mail::to('defectg3x@gmail.com')->send(
-//        new \App\Mail\JobPosted()
-//    );
-//    return 'Done';
-//});
+Route::get('test', function () {
+
+    // Функция диспетчеризации задач, для отправки ее в очередь
+//    dispatch(function () {
+//        logger('hello from the queue!');
+//    })->delay(5);
+
+    // Использование класса заданий, альтернативный вариант
+    $job = Job::first();
+    TranslateJob::dispatch($job);
+
+    return 'Done';
+});
 
 // Обновление метода отображения home страницы через view
 Route::view('/', 'home');

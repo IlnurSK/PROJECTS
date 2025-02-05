@@ -48,7 +48,13 @@ class JobController extends Controller
             'employer_id' => 1
         ]);
 
-        Mail::to($job->employer->user)->send(
+        // Подключение почтового класса, и отправка сообщения о публикации пользователю на почту, используя синхронный метод SYNC - send()
+//        Mail::to($job->employer->user)->send(
+//            new JobPosted($job)
+//        );
+
+        // Альтернативный вариант, используем систему очередей queue
+        Mail::to($job->employer->user)->queue(
             new JobPosted($job)
         );
 

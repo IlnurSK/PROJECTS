@@ -11,13 +11,35 @@ Route::view('/', 'home');
 Route::view('/contact', 'contact');
 
 // Группировка всех маршрутов с помощью метода resource, по стандарту RESTful
-Route::resource('jobs', JobController::class);
+//Route::resource('jobs', JobController::class)->middleware('auth');
+
+// Маршрутизация вакансий
+Route::get('/jobs', [JobController::class, 'index']);
+Route::get('/jobs/create', [JobController::class, 'create']);
+Route::post('/jobs', [JobController::class, 'store'])->middleware('auth');
+Route::get('/jobs/{job}', [JobController::class, 'show']);
+
+Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])
+    ->middleware('auth') // Проверка на авторизацию пользователя
+    ->can('edit-job', 'job'); // Проверка права редактирования у пользователя
+
+// Альтернативный вариант промежуточного ПО через массив
+//Route::get('/jobs/{job}/edit', [JobController::class, 'edit'])->middleware(['auth', 'can:edit-job,job']);
+
+Route::patch('/jobs/{job}', [JobController::class, 'update'])
+    ->middleware('auth') // Проверка на авторизацию пользователя
+    ->can('edit', 'job'); // Проверка права редактирования у пользователя через политику edit
+//    ->can('edit-job', 'job'); // Альтернативная проверка права редактирования у пользователя через шлюз edit-job
+
+Route::delete('/jobs/{job}', [JobController::class, 'destroy'])
+    ->middleware('auth') // Проверка на авторизацию пользователя
+    ->can('edit-job', 'job'); // Проверка права редактирования у пользователя
 
 // Auth. Аутентификация
 Route::get('/register', [RegisteredUserController::class, 'create']);
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
-Route::get('/login', [SessionController::class, 'create']);
+Route::get('/login', [SessionController::class, 'create'])->name('login');
 Route::post('/login', [SessionController::class, 'store']);
 Route::post('/logout', [SessionController::class, 'destroy']);
 

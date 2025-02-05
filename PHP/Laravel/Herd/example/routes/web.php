@@ -5,6 +5,15 @@ use App\Http\Controllers\RegisteredUserController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
+// Тестовая реализация маршрута отправки письма
+//Route::get('test', function () {
+////    return new \App\Mail\JobPosted();
+//    \Illuminate\Support\Facades\Mail::to('defectg3x@gmail.com')->send(
+//        new \App\Mail\JobPosted()
+//    );
+//    return 'Done';
+//});
+
 // Обновление метода отображения home страницы через view
 Route::view('/', 'home');
 // Практика: создание маршрута страницы контактов

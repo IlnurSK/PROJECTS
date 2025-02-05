@@ -33,7 +33,9 @@
 
 `php artisan make:controller` - создать контроллер для ресурса/API/функции и тд
 
-`php artisan make:policy` - создать политику
+`php artisan make:policy` - создать политику к модели
+
+`php artisan make:mail` - создать почтовый класс (Mailable class)
 
 `php artisan migrate` - провести миграции таблиц БД, если их нет, то создаст стандартные таблицы
 

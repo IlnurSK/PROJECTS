@@ -9,6 +9,15 @@
 `composer require barryvdh/laravel-debugbar --dev` - установка отладочной панели через composer в проект, конфигурирование происходит в файле .env, константа APP_DEBUG=true/false
 
 ## Команды терминала, вводятся в директории проекта Laravel
+
+`npm install` - установка зависимостей проекта
+
+`npm run dev` - запускает скрипт dev в package.json. В Laravel используется для запуска сервера Vite с горячим обновлением
+
+`npm run build` - запускает скрипт build. Который собирает файлы в пакет для отправки на Prod
+
+`npm install tailwindcss @tailwindcss/vite` - установка пакета tailwindcss
+
 `laravel new example` - создать новый проект где `example` имя проекта. Опционально можно выбрать стартовый пакет модуля авторизации (Laravel Breeze), рекомендуется использовать только в новом проекте. Также можно указать какой стак технологий используется в проекте (Blade with Alpine/React/Vue/Livewire)
 
 `php artisan` - мощный консольный инструмент Laravel, данная команда выведет список всех доступных команд

@@ -8,7 +8,11 @@
         This job pays {{ $job->salary }} per year.
     </p>
 
+    {{--если пользователь авторизован, то отобразим кнопку через политику--}}
+    @can('edit', $job)
+    {{--@can('edit-job', $job) альтернативно через шлюз edit-job--}}
     <p class="mt-6">
         <x-button href="/jobs/{{ $job->id }}/edit">Edit Job</x-button>
     </p>
+    @endcan
 </x-layout>

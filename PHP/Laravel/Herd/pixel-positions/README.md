@@ -169,3 +169,214 @@ theme: {
 </x-layout>
 
 ```
+32. Создаем макет карточки широкой версии `resources/views/components/job-card-wide.blade.php`
+```bladehtml
+<div class="p-4 bg-white/5 rounded-xl flex gap-x-6">
+    <div>
+        <img src="https://loremflickr.com/100/100?random={{ rand(0,100) }}" alt="" class="rounded-xl">
+    </div>
+
+    <div class="flex-1 flex flex-col">
+        <a href="#" class="self-start text-sm text-gray-400">Laracasts</a>
+
+        <h3 class="font-bold text-xl mt-3">Video Producer</h3>
+
+        <p class="text-sm text-gray-400 mt-auto">Full Time - From $60,000</p>
+    </div>
+
+    <div>
+        <x-tag>Tag</x-tag>
+        <x-tag>Tag</x-tag>
+        <x-tag>Tag</x-tag>
+    </div>
+</div>
+```
+33. Добавляем ссылку на этот шаблон на главном шаблоне `resources/views/welcome.blade.php`
+```bladehtml
+<section>
+    <x-section-heading>Recent Jobs</x-section-heading>
+
+    <div class="mt-6 space-y-6">
+        <x-job-card-wide/>
+        <x-job-card-wide/>
+        <x-job-card-wide/>
+    </div>
+</section>
+```
+34. В макет `resources/views/components/layout.blade.php`, добавим подключение шрифта `Hanken Grotesk`, и применим его к телу страницы
+```bladehtml
+<title>Pixel Positions</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&family=Roboto&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css','resources/js/app.js'])
+</head>
+
+<body class="bg-black text-white font-hanken-grotesk">
+```
+35. Подключим этот шрифт в конфигурации TailwindCSS `tailwind.config.js`
+```javascript
+theme: {
+        extend: {
+            fontFamily: {
+                "hanken-grotesk": ["Hanken Grotesk", "sans-serif"],                
+            },
+            colors: {
+                "black": "#060606"
+            }
+        },
+    },
+```
+36. Выделим логотипы карточек в отдельный компонент `resources/views/components/employer-logo.blade.php`
+```bladehtml
+<img src="https://loremflickr.com/100/100?random={{ rand(0,100) }}" alt="" class="rounded-xl">
+```
+37. Создадим ссылку на него вместо изображения `<img>` в `resources/views/components/job-card-wide.blade.php` и `resources/views/components/job-card.blade.php`
+```bladehtml
+<x-employer-logo/>
+```
+38. В шаблоне логотипа `resources/views/components/employer-logo.blade.php` добавим возможность изменять размеры через свойства `@props`:
+```bladehtml
+@props(['width' => 90])
+<img src="https://loremflickr.com/{{ $width }}/{{ $width }}?random={{ rand(0,100) }}" alt="" class="rounded-xl">
+```
+39. Добавим это свойство в макет `resources/views/components/job-card.blade.php`
+```bladehtml
+<x-employer-logo :width="42"/>
+```
+40. В файл конфигурации Tailwind `tailwind.config.js` добавим кастомный размер шрифта:
+```javascript
+theme: {
+        extend: {
+            fontFamily: {
+                "hanken-grotesk": ["Hanken Grotesk", "sans-serif"],
+                // sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                "black": "#060606"
+            },
+            fontSize: {
+                "2xs": "0.625rem" // 10px
+            }
+        },
+    },
+```
+41. Добавим новый размер в шаблоны тегов `resources/views/components/tag.blade.php`
+```bladehtml
+<a href="#" class="bg-white/10 hover:bg-white/25 px-3 py-1 rounded-xl text-2xs font-bold transition-colors duration-300">{{ $slot }}</a>
+```
+42. Добавим стиль при наведении на карточку в `resources/views/components/job-card.blade.php`
+```bladehtml
+<div class="p-4 bg-white/5 rounded-xl flex flex-col text-center border border-transparent hover:border-blue-800 group transition-colors duration-300">
+    <div class="self-start text-sm">Laracasts</div>
+
+    <div class="py-8">
+        <h3 class="group-hover:text-blue-800 text-xl font-bold transition-colors duration-300">Video Producer</h3>
+        <p class="text-sm mt-4">Full Time - From $60,000</p>
+    </div>
+```
+43. Также добавим на широкие карточки `resources/views/components/job-card-wide.blade.php`
+```bladehtml
+<div class="p-4 bg-white/5 rounded-xl flex gap-x-6 border border-transparent hover:border-blue-800 group transition-colors duration-300">
+    <div>
+        <x-employer-logo/>
+    </div>
+
+    <div class="flex-1 flex flex-col">
+        <a href="#" class="self-start text-sm text-gray-400">Laracasts</a>
+
+        <h3 class="font-bold text-xl mt-3 group-hover:text-blue-800 transition-colors duration-300">Video Producer</h3>
+```
+44. Создадим шаблон панелей `resources/views/components/panel.blade.php`
+```bladehtml
+@php
+$classes = 'p-4 bg-white/5 rounded-xl border border-transparent hover:border-blue-800 group transition-colors duration-300';
+@endphp
+
+
+<div {{ $attributes(['class' => $classes]) }}>
+{{ $slot }}
+</div>
+```
+45. Применим его в `resources/views/components/job-card-wide.blade.php`
+```bladehtml
+<x-panel class="flex gap-x-6">
+    <div>
+        <x-employer-logo/>
+    </div>
+
+    <div class="flex-1 flex flex-col">
+        <a href="#" class="self-start text-sm text-gray-400">Laracasts</a>
+
+        <h3 class="font-bold text-xl mt-3 group-hover:text-blue-800 transition-colors duration-300">Video Producer</h3>
+
+        <p class="text-sm text-gray-400 mt-auto">Full Time - From $60,000</p>
+    </div>
+
+    <div>
+        <x-tag>Tag</x-tag>
+        <x-tag>Tag</x-tag>
+        <x-tag>Tag</x-tag>
+    </div>
+</x-panel>>
+```
+46. Также добавляем в макет обычных карточек `resources/views/components/job-card.blade.php`
+```bladehtml
+<x-panel class="flex flex-col text-center">
+    <div class="self-start text-sm">Laracasts</div>
+
+    <div class="py-8">
+        <h3 class="group-hover:text-blue-800 text-xl font-bold transition-colors duration-300">Video Producer</h3>
+        <p class="text-sm mt-4">Full Time - From $60,000</p>
+    </div>
+
+    <div class="flex justify-between items-center mt-auto">
+        <div>
+            <x-tag>Tag</x-tag>
+            <x-tag>Tag</x-tag>
+            <x-tag>Tag</x-tag>
+        </div>
+
+        <x-employer-logo :width="42"/>
+    </div>
+</x-panel>
+```
+47. В файле шаблона тегов реализуем возможность выбирать размер `resources/views/components/tag.blade.php`:
+```bladehtml
+@props(['size' => 'base'])
+
+@php
+    $classes = "bg-white/10 hover:bg-white/25 rounded-xl font-bold transition-colors duration-300";
+    if ($size === 'base') {
+        $classes .= " px-5 py-1 text-sm";
+    }
+
+    if ($size === 'small') {
+        $classes .= " px-3 py-1 text-2xs";
+    }
+@endphp
+
+<a href="#" class="{{ $classes }}">{{ $slot }}</a>
+```
+48. Добавим уменьшенные теги в карточки `resources/views/components/job-card.blade.php`:
+```bladehtml
+<div>
+    <x-tag size="small">Backend</x-tag>
+    <x-tag size="small">Frontend</x-tag>
+    <x-tag size="small">Manager</x-tag>
+</div>
+```
+49. В основной шаблон добавляем новый элемент `resources/views/welcome.blade.php`:
+```bladehtml
+<x-layout>
+    <div class="space-y-10">
+        <section class="text-center pt-6">
+            <h1 class="font-bold text-4xl">Let's Find Your Next Job</h1>
+
+            <form action="" class="mt-6">
+                <input type="text" placeholder="Web Developer..." class="rounded-xl bg-white/5 border-white/10 px-5 py-4 w-full max-w-xl">
+            </form>
+        </section>
+
+        <section class="pt-10">
+```

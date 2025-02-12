@@ -800,3 +800,242 @@ public function index()
 <x-job-card :$job/>
 @endforeach
 ```
+103. В маршрутизаторе создаем необходимые маршруты `routes/web.php`:
+```php
+Route::get('/register', [RegisteredUserController::class, 'create']);
+Route::post('/register', [RegisteredUserController::class, 'store']);
+Route::get('/login', [SessionController::class, 'create']);
+Route::post('/login', [SessionController::class, 'store']);
+Route::delete('/logout', [SessionController::class, 'destroy']);
+```
+104. `php artisan make:controller SessionController --resource` - создаем контроллер SessionController
+105. `php artisan make:controller RegisteredUserController --resource` - создаем контроллер RegisteredUserController
+106. Импортируем их в роутере `routes/web.php`.
+107. В контроллере RegisteredUserController `app/Http/Controllers/RegisteredUserController.php`, создаем метод create():
+```php
+public function create()
+    {
+        return view('auth.register');
+    }
+```
+108. Создаем представление для него `resources/views/auth/register.blade.php`:
+```bladehtml
+<x-layout>
+    <x-page-heading>Register</x-page-heading>
+</x-layout>
+```
+109. Начинаем создавать необходимые компоненты и добавлять в макет: макет заголовка `resources/views/components/page-heading.blade.php`:
+```bladehtml
+<h1 class="font-bold text-center text-4xl mb-8">{{ $slot }}</h1>
+```
+110. Создадим макет кнопки `resources/views/components/forms/button.blade.php`:
+```bladehtml
+<button {{ $attributes(['class' => 'bg-blue-800 rounded py-2 px-6 dont-bold']) }}>{{ $slot }}</button>
+```
+111. Создадим макет формы `resources/views/components/forms/form.blade.php`:
+```bladehtml
+<form {{ $attributes(["class" => "max-w-2xl mx-auto space-y-6", "method" => "GET"]) }}>
+    @if ($attributes->get('method', 'GET') !== 'GET')
+        @csrf
+        @method($attributes->get('method'))
+    @endif
+
+    {{ $slot }}
+</form>
+```
+112. Создаем макет полей ввода `resources/views/components/forms/input.blade.php`:
+```bladehtml
+@props(['label', 'name'])
+
+@php
+    $defaults = [
+        'type' => 'text',
+        'id' => $name,
+        'name' => $name,
+        'class' => 'rounded-xl bg-white/10 border border-white/10 px-5 py-4 w-full',
+        'value' => old($name)
+];
+@endphp
+
+<x-forms.field :$label :$name>
+    <input {{ $attributes($defaults) }}>
+</x-forms.field>
+```
+113. Создадим макет для лэйбла и филда `resources/views/components/forms/field.blade.php`:
+```bladehtml
+@props(['label', 'name'])
+
+<div>
+    @if($label)
+        <x-forms.label :$name :$label />
+    @endif
+
+    <div class="mt-1">
+        {{ $slot }}
+
+        <x-forms.error :error="$errors->first($name)" />
+    </div>
+</div>
+```
+114. Добавим отступ в тело основного макета `resources/views/components/layout.blade.php`:
+```bladehtml
+<body class="bg-black text-white font-hanken-grotesk pb-10">
+```
+115. Создадим макет для Лэйблов `resources/views/components/forms/label.blade.php`:
+```bladehtml
+@props(['name', 'label'])
+
+<div class="inline-flex items-center gap-x-2">
+    <span class="w-2 h-2 bg-white inline-block"></span>
+    <label class="font-bold" for="{{ $name }}">{{ $label }}</label>
+</div>
+```
+116. Создадим макет для поля отображения ошибок `resources/views/components/forms/error.blade.php`:
+```bladehtml
+@props(['error' => false])
+
+@if ($error)
+    <p class="text-sm text-red-500 mt-1">{{ $error }}</p>
+@endif
+```
+117. Создадим макет для разделительной линии `resources/views/components/forms/divider.blade.php`:
+```bladehtml
+<div>
+    <div class="bg-white/10 my-10 h-px w-full"></div>
+</div>
+```
+118. Оформим макет страницы регистрации `resources/views/auth/register.blade.php`:
+```bladehtml
+<x-layout>
+    <x-page-heading>Register</x-page-heading>
+
+    <x-forms.form method="POST" action="/register" enctype="multipart/form-data">
+        <x-forms.input label="Name" name="name" />
+        <x-forms.input label="Email" name="email" type="email"/>
+        <x-forms.input label="Password" name="password" type="password"/>
+        <x-forms.input label="Password Confirmation" name="password_confirmation" type="password"/>
+
+        <x-forms.divider />
+
+        <x-forms.input label="Employer Name" name="employer" />
+        <x-forms.input label="Employer Logo" name="logo" type="file" />
+
+        <x-forms.button>Create Account</x-forms.button>
+    </x-forms.form>
+</x-layout>
+```
+119. В файле зависимостей `.env`, изменим параметр хранения файлов для логотипов на публичный:
+```php
+FILESYSTEM_DISK=public
+```
+120. В контроллере регистрации реализуем метод store() `app/Http/Controllers/RegisteredUserController.php`:
+```php
+public function store(Request $request)
+    {
+        $userAttributes = $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => ['required', 'confirmed', Password::min(6)],
+        ]);
+
+        $employerAttributes = $request->validate([
+            'employer' => ['required'],
+            'logo' => ['required', File::types(['png', 'jpg', 'webp'])],
+        ]);
+
+        $user = User::create($userAttributes);
+
+        $logoPath = $request->logo->store('logos');
+
+        $user->employer()->create([
+            'name' => $employerAttributes['employer'],
+            'logo' => $logoPath
+        ]);
+
+        Auth::login($user);
+
+        return redirect('/');
+    }
+```
+121. В контроллере сессий реализуем метод create() `app/Http/Controllers/SessionController.php`:
+```php
+public function create()
+    {
+        return view('auth.login');
+    }
+```
+122. Создадим представление страницы логина `resources/views/auth/login.blade.php`:
+```bladehtml
+<x-layout>
+    <x-page-heading>Log In</x-page-heading>
+
+    <x-forms.form method="POST" action="/login">
+        <x-forms.input label="Email" name="email" type="email"/>
+        <x-forms.input label="Password" name="password" type="password"/>
+
+        <x-forms.button>Log In</x-forms.button>
+    </x-forms.form>
+</x-layout>
+```
+123. В контроллере сессий реализуем методы store() и destroy() `app/Http/Controllers/SessionController.php`:
+```php
+public function store()
+    {
+        $attributes = request()->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (! \Auth::attempt($attributes)) {
+            throw ValidationException::withMessages([
+                'email' => 'Sorry, those credentials do not match.',
+            ]);
+        }
+
+            request()->session()->regenerate();
+
+            return redirect('/');
+    }
+```
+```php
+public function destroy(string $id)
+    {
+        \Auth::logout();
+
+        return redirect('/');
+    }
+```
+124. Добавляем в роутер промежуточное ПО для работы логики гостевого входа `routes/web.php`:
+```php
+Route::get('/', [\App\Http\Controllers\JobController::class, 'index']);
+
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [RegisteredUserController::class, 'create']);
+    Route::post('/register', [RegisteredUserController::class, 'store']);
+    Route::get('/login', [SessionController::class, 'create']);
+    Route::post('/login', [SessionController::class, 'store']);
+});
+
+Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('auth');
+```
+125. В макете основном реализуем логику отображения кнопки добавления вакансий при авторизации `resources/views/components/layout.blade.php`:
+```bladehtml
+@auth
+<div>
+    <a href="/jobs/create">Post a Job</a>
+</div>
+@endauth
+
+@guest
+<div class="space-x-6 font-bold">
+    <a href="/register">Sign Up</a>
+    <a href="/login">Log In</a>
+</div>
+@endguest
+```
+126. В макете отображения списка вакансий изменим отображение формы `resources/views/jobs/index.blade.php`:
+```bladehtml
+<x-forms.form action="/search" class="mt-6">
+    <x-forms.input :label="false" name="q" placeholder="Web Developer..."/>
+</x-forms.form>
+```

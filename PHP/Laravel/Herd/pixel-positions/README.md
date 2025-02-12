@@ -380,3 +380,423 @@ $classes = 'p-4 bg-white/5 rounded-xl border border-transparent hover:border-blu
 
         <section class="pt-10">
 ```
+50. Закончили фронт-энд часть, начинаем делать бэк-энд. В терминале создаем миграцию для таблицы Employers:
+
+`php artisan make:migration create_employers_table`
+51. В схему миграции добавляем поля имени, логотипа, и создаем внешний ключ к таблице пользователей:
+```php
+Schema::create('employers', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\App\Models\User::class);
+            $table->string('name');
+            $table->string('logo');
+            $table->timestamps();
+        });
+```
+52. `php artisan migrate` проводим миграцию, проверяем создание таблицы в БД.
+53. В конфигурационном файле таблицы БД, поменяем имена дефолтных таблиц очередей (jobs) `config/queue.php`:
+```php
+'database' => [
+            'driver' => 'database',
+            'connection' => env('DB_QUEUE_CONNECTION'),
+            'table' => env('DB_QUEUE_TABLE', 'queued_jobs'),
+            'queue' => env('DB_QUEUE', 'default'),
+            'retry_after' => (int) env('DB_QUEUE_RETRY_AFTER', 90),
+            'after_commit' => false,
+        ],
+```
+```php
+'batching' => [
+        'database' => env('DB_CONNECTION', 'sqlite'),
+        'table' => 'queued_job_batches',
+    ],
+```
+```php
+'failed' => [
+        'driver' => env('QUEUE_FAILED_DRIVER', 'database-uuids'),
+        'database' => env('DB_CONNECTION', 'sqlite'),
+        'table' => 'queued_failed_jobs',
+    ],
+```
+54. Находим файл миграций этих дефолтных таблицы `database/migrations/0001_01_01_000002_create_jobs_table.php`, переименовываем его `database/migrations/0001_01_01_000002_create_queued_jobs_table.php` и также меняем имена таблицы:
+```php
+Schema::create('queued_jobs', function (Blueprint $table) ...
+Schema::create('queued_job_batches', function (Blueprint $table) ...
+Schema::create('queued_failed_jobs', function (Blueprint $table) ...
+```
+55. `php artisan migrate:fresh` - обновляем наши миграции, проверяем обновленные таблицы в БД.
+56. `php artisan make:model Employer -cfs --policy` - создаем модель Employer с ключами на создание контроллера, фабрики, сеялки БД, политики
+57. `php artisan make:model Job --all` - создаем модель Job с ключом --all для всех сущностей, которые предоставляет Laravel
+58. Добавляем все необходимые столбцы в файл миграции Job `database/migrations/2025_02_11_083948_create_jobs_table.php`:
+```php
+Schema::create('jobs', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\App\Models\Employer::class);
+            $table->string('title');
+            $table->string('salary');
+            $table->string('location');
+            $table->string('schedule')->default('Full Time');
+            $table->string('url');
+            $table->boolean('featured')->default(false);
+            $table->timestamps();
+        });
+```
+59. `php artisan migrate` - проводим эту миграцию.
+60. В модель Employer добавляем связь (принадлежит) с User `app/Models/Employer.php`:
+```php
+public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+```
+61. В модели User создаем связь (имеет только одного) с Employer `app/Models/User.php`:
+```php
+public function employer(): HasOne
+    {
+        return $this->hasOne(Employer::class);
+    }
+```
+62. В модели Job создаем связь (принадлежит) с Employer `app/Models/Job.php`:
+```php
+public function employer(): BelongsTo
+    {
+        return $this->belongsTo(Employer::class);
+    }
+```
+63. В модели Employer создаем связь (имеет много) с Job `app/Models/Employer.php`:
+```php
+public function jobs(): HasMany
+    {
+        return $this->hasMany(Job::class);
+    }
+```
+64. Заполним фабрику работодателей `database/factories/EmployerFactory.php`:
+```php
+public function definition(): array
+    {
+        return [
+            'name' => fake()->name,
+            'logo' => fake()->imageUrl(),
+            'user_id' => User::factory(),
+        ];
+    }
+```
+65. Заполним фабрику вакансий `database/factories/JobFactory.php`:
+```php
+public function definition(): array
+    {
+        return [
+            'employer_id' => Employer::factory(),
+            'title' => fake()->jobTitle,
+            'salary' => fake()->randomElement(['$50,000 USD', '$90,000 USD', '$150,000 USD']),
+            'location' => fake()->randomElement(['Remote', 'Office', 'Outdoor']),
+            'schedule' => fake()->randomElement(['Full Time', 'Part Time']),
+            'url' => fake()->url,
+            'featured' => false
+        ];
+    }
+```
+66. Сконфигурируем файл тестовой среды Pest `phpunit.xml`:
+```xml
+<php>
+    <env name="APP_ENV" value="testing"/>
+    <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+    <env name="BCRYPT_ROUNDS" value="4"/>
+    <env name="CACHE_STORE" value="array"/>
+    <env name="DB_CONNECTION" value="sqlite"/>
+    <env name="DB_DATABASE" value=":memory:"/>
+    <env name="MAIL_MAILER" value="array"/>
+    <env name="PULSE_ENABLED" value="false"/>
+    <env name="QUEUE_CONNECTION" value="sync"/>
+    <env name="SESSION_DRIVER" value="array"/>
+    <env name="TELESCOPE_ENABLED" value="false"/>
+</php>
+```
+67. `php artisan make:test` - создаем тест, назовем его `JobTest`, выбираем модульное `Unit`.
+68. `php artisan test` - проведем проверку тестов, и удалим лишний `tests/Unit/ExampleTest.php`
+69. Настраиваем тестовое окружение в файле `tests/Pest.php`:
+```php
+pest()->extend(Tests\TestCase::class)
+  ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->in('Feature', 'Unit');
+```
+70. Создаем тест сущности вакансий Job `tests/Unit/JobTest.php`:
+```php
+it('belongs to an employer', function () {
+    // Arrange (Организовать)
+    $employer = \App\Models\Employer::factory()->create();
+
+    $job = \App\Models\Job::factory()->create([
+        'employer_id' => $employer->id,
+    ]);
+
+    // Act (Действовать) и Assert (Утверждать)
+    expect($job->employer->is($employer))->toBeTrue();
+});
+```
+71. `php artisan test` - запускаем тест.
+72. Создаем тест несуществующей функции `tests/Unit/JobTest.php`:
+```php
+it('can have tags', function () {
+    // AAA
+    $job = \App\Models\Job::factory()->create();
+
+    $job->tag('Frontend');
+
+    expect($job->tags)->toHaveCount(1);
+
+});
+```
+73. Запускаем тест и начинаем реализацию логики.
+74. В модели Job `app/Models/Job.php` добавим два метода:
+```php
+    public function tag()
+    {
+    }
+
+    public function tags()
+    {
+        return [];
+    }
+```
+75. `php artisan make:model Tag -fm` - создаем модель Tag
+76. В файле миграции тегов добавим столбцы `database/migrations/2025_02_11_111237_create_tags_table.php`:
+```php
+Schema::create('tags', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+```
+77. В фабрике тэгов создаем генерацию данных `database/factories/TagFactory.php`:
+```php
+public function definition(): array
+    {
+        return [
+            'name' => fake()->unique()->word
+        ];
+    }
+```
+78. Добавляем связь многие ко многим в `app/Models/Job.php`:
+```php
+public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+```
+79. `php artisan make:migration create_job_tag_table` - создаем миграцию на сводную таблицу для тэгов
+80. Добавляем в миграцию связи на сводные таблицы и ставим каскадное удаление `database/migrations/2025_02_11_112026_create_job_tag_table.php`:
+```php
+Schema::create('job_tag', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(\App\Models\Job::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(\App\Models\Tag::class)->constrained()->cascadeOnDelete();
+            $table->timestamps();
+        });
+```
+81. `php artisan migrate` - проводим эти миграции.
+82. Реализуем метод tag() в Job `app/Models/Job.php`:
+```php
+public function tag(string $name): void
+    {
+        $tag = Tag::firstOrCreate(['name' => $name]);
+        $this->tags()->attach($tag);
+    }
+```
+83. Выключаем защиту на заполнение столбцов в БД `app/Providers/AppServiceProvider.php`:
+```php
+public function boot(): void
+    {
+        Model::unguard();
+    }
+```
+84. Запускаем тест `php artisan test`, и он должен пройти. Таким образом мы реализовали принцип TDD, разработка через тестирование.
+85. В маршрутизаторе `routes/web.php`, стартовый маршрут делаем на контроллер вакансий:
+```php
+Route::get('/', [\App\Http\Controllers\JobController::class, 'index']);
+```
+86. Добавляем метод index() в контроллер вакансий `app/Http/Controllers/JobController.php`:
+```php
+public function index()
+    {
+        return view('jobs.index', [
+            'jobs' => Job::all(),
+            'tags' => Tag::all()
+        ]);
+    }
+```
+87. Проведем небольшой рефакторинг, весь код с `resources/views/welcome.blade.php`, перенесем в новый файл `resources/views/jobs/index.blade.php`, и удалим старый
+88. В представление добавляем отрисовку тэгов, вместо заглушек `resources/views/jobs/index.blade.php`:
+```bladehtml
+
+<section>
+    <x-section-heading>Tags</x-section-heading>
+
+    <div class="mt-6 space-x-1">
+        @foreach($tags as $tag)
+        <x-tag :$tag="$tag"/>
+        @endforeach
+    </div>
+</section>
+```
+89. Редактируем шаблон тэгов `resources/views/components/tag.blade.php`, чтобы передать в него данные модели:
+```bladehtml
+@props(['tag', 'size' => 'base'])
+
+@php
+    $classes = "bg-white/10 hover:bg-white/25 rounded-xl font-bold transition-colors duration-300";
+    if ($size === 'base') {
+        $classes .= " px-5 py-1 text-sm";
+    }
+
+    if ($size === 'small') {
+        $classes .= " px-3 py-1 text-2xs";
+    }
+@endphp
+
+<a href="/tags/{{ strtolower($tag->name) }}" class="{{ $classes }}">{{ $tag->name }}</a>
+```
+90. Также редактируем шаблон карточек `resources/views/components/job-card.blade.php`:
+```bladehtml
+<div>
+    @foreach($job->tags as $tag)
+    <x-tag :$tag size="small">Backend</x-tag>
+    @endforeach
+</div>
+```
+91. Также редактируем шаблон широких карточек `resources/views/components/job-card-wide.blade.php`:
+```bladehtml
+<div>
+    @foreach($job->tags as $tag)
+    <x-tag :$tag>Backend</x-tag>
+    @endforeach
+</div>
+```
+92. В начало файлов обоих шаблонов карточек `resources/views/components/job-card-wide.blade.php` и `resources/views/components/job-card.blade.php` нужно добавить свойство `@props(['job'])`, чтобы шаблон получил к ним доступ. 
+93. В `resources/views/jobs/index.blade.php`, также добавим отрисовку данных с БД:
+```bladehtml
+<section class="pt-10">
+    <x-section-heading>Featured Jobs</x-section-heading>
+
+    <div class="grid lg:grid-cols-3 gap-8 mt-6">
+        @foreach($jobs as $job)
+        <x-job-card :$job/>
+        @endforeach
+    </div>
+</section>
+```
+```bladehtml
+<section>
+    <x-section-heading>Recent Jobs</x-section-heading>
+
+    <div class="mt-6 space-y-6">
+        @foreach($jobs as $job)
+        <x-job-card-wide :$job/>
+        @endforeach
+    </div>
+</section>
+```
+94. В сеятеле вакансий `database/seeders/JobSeeder.php`, добавим данные:
+```php
+public function run(): void
+    {
+        $tags = Tag::factory(3)->create();
+        Job::factory(20)->hasAttached($tags)->create();
+    }
+```
+95. В основном сеятеле `database/seeders/DatabaseSeeder.php`, добавим вызов сеятеля вакансий:
+```php
+public function run(): void
+    {
+        // User::factory(10)->create();
+
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+        
+        $this->call(JobSeeder::class);
+    }
+```
+96. `php artisan db:seed` - запускаем сеятель, проверяем результат в БД.
+97. Заменим статичные элементы на динамические с БД в `resources/views/components/job-card.blade.php`:
+```bladehtml
+@props(['job'])
+
+<x-panel class="flex flex-col text-center">
+    <div class="self-start text-sm">{{ $job->employer->name }}</div>
+
+    <div class="py-8">
+        <h3 class="group-hover:text-blue-800 text-xl font-bold transition-colors duration-300">{{ $job->title }}</h3>
+        <p class="text-sm mt-4">{{ $job->salary }}</p>
+    </div>
+
+    <div class="flex justify-between items-center mt-auto">
+        <div>
+            @foreach($job->tags as $tag)
+                <x-tag :$tag size="small" />
+            @endforeach
+        </div>
+
+        <x-employer-logo :width="42"/>
+    </div>
+</x-panel>
+```
+98. Шаблон широких карточек также обновим `resources/views/components/job-card-wide.blade.php`:
+```bladehtml
+@props(['job'])
+
+<x-panel class="flex gap-x-6">
+    <div>
+        <x-employer-logo/>
+    </div>
+
+    <div class="flex-1 flex flex-col">
+        <a href="#" class="self-start text-sm text-gray-400">{{ $job->employer->name }}</a>
+
+        <h3 class="font-bold text-xl mt-3 group-hover:text-blue-800 transition-colors duration-300">{{ $job->title }}</h3>
+
+        <p class="text-sm text-gray-400 mt-auto">{{ $job->salary }}</p>
+    </div>
+
+    <div>
+        @foreach($job->tags as $tag)
+            <x-tag :$tag />
+        @endforeach
+    </div>
+</x-panel>
+```
+99. В сеятель вакансий `database/seeders/JobSeeder.php`, добавим вариативность для двух итераций:
+```php
+public function run(): void
+    {
+        $tags = Tag::factory(3)->create();
+        Job::factory(20)->hasAttached($tags)->create(new Sequence([
+            'featured' => false,
+            'schedule' => 'Full Time'
+        ], [
+            'featured' => true,
+            'schedule' => 'Part Time'
+        ]));
+    }
+```
+100. `php artisan migrate:fresh --seed` - обновим миграции
+101. Обновим логику для контроллера `app/Http/Controllers/JobController.php`:
+```php
+public function index()
+    {
+        $jobs = Job::all()->groupBy('featured');
+
+        return view('jobs.index', [
+            'featuredJobs' => $jobs[0],
+            'jobs' => $jobs[1],
+            'tags' => Tag::all(),
+        ]);
+    }
+```
+102. Обновим отображение вакансий с фичей `resources/views/jobs/index.blade.php`:
+```bladehtml
+@foreach($featuredJobs as $job)
+<x-job-card :$job/>
+@endforeach
+```

@@ -785,11 +785,11 @@ public function run(): void
 ```php
 public function index()
     {
-        $jobs = Job::all()->groupBy('featured');
+        $jobs = Job::latest()->with(['employer', 'tags'])->get()->groupBy('featured');
 
         return view('jobs.index', [
-            'featuredJobs' => $jobs[0],
-            'jobs' => $jobs[1],
+            'jobs' => $jobs[0],
+            'featuredJobs' => $jobs[1],
             'tags' => Tag::all(),
         ]);
     }
@@ -1033,9 +1033,196 @@ Route::delete('/logout', [SessionController::class, 'destroy'])->middleware('aut
 </div>
 @endguest
 ```
-126. В макете отображения списка вакансий изменим отображение формы `resources/views/jobs/index.blade.php`:
+126. В макете отображения списка вакансий изменим отображение формы поиска `resources/views/jobs/index.blade.php`:
 ```bladehtml
 <x-forms.form action="/search" class="mt-6">
     <x-forms.input :label="false" name="q" placeholder="Web Developer..."/>
 </x-forms.form>
 ```
+127. `php artisan make:controller SearchController` - создадим контроллер поиска в терминале.
+128. В маршрутизаторе добавим для него маршрут `routes/web.php`:
+```php
+Route::get('/search', SearchController::class);
+```
+129. В контроллере реализуем магический метод __invoke() `app/Http/Controllers/SearchController.php`:
+```php
+public function __invoke()
+    {
+        $jobs = Job::query()
+            ->with(['employer', 'tags'])
+            ->where('title', 'LIKE', '%' . \request('q') . '%')
+            ->get();
+
+        return view('results', ['jobs' => $jobs]);
+    }
+```
+130. Реализуем представление для результатов поиска `resources/views/results.blade.php`:
+```bladehtml
+<x-layout>
+    <x-page-heading>Results</x-page-heading>
+
+    <div class="space-y-6">
+        @foreach($jobs as $job)
+            <x-job-card-wide :$job />
+        @endforeach
+    </div>
+</x-layout>
+```
+131. `php artisan make:controller TagController` - создаем в терминале контроллер для тегов.
+132. Добавляем маршрут в `routes/web.php`:
+```php
+Route::get('/tags/{tag:name}', TagController::class);
+```
+133. В модели тэгов сделаем связь с моделью вакансий `app/Models/Tag.php`:
+```php
+public function jobs(): BelongsToMany
+    {
+        return $this->belongsToMany(Job::class);
+    }
+```
+134. В контроллер тэгов `app/Http/Controllers/TagController.php` реализуем метод __invoke():
+```php
+public function __invoke(Tag $tag)
+    {
+        return view('results', ['jobs' => $tag->jobs]);
+    }
+```
+135. Создадим маршруты для кнопки публикации вакансий `routes/web.php`:
+```php
+Route::get('/jobs/create', [\App\Http\Controllers\JobController::class, 'create'])->middleware('auth');
+Route::post('/jobs', [\App\Http\Controllers\JobController::class, 'store'])->middleware('auth');
+```
+136. В контроллере вакансий реализуем метод create() `app/Http/Controllers/JobController.php`:
+```php
+public function create()
+    {
+        return view('jobs.create');
+    }
+```
+137. Создадим шаблон для выпадающего списка `resources/views/components/forms/select.blade.php`:
+```bladehtml
+@props(['label', 'name'])
+
+@php
+    $defaults = [
+        'id' => $name,
+        'name' => $name,
+        'class' => 'rounded-xl bg-white/10 border border-white/10 px-5 py-5 w-full'
+];
+@endphp
+
+<x-forms.field :$label :$name>
+    <select {{ $attributes($defaults) }}>
+        {{ $slot }}
+    </select>
+</x-forms.field>
+```
+138. Создадим шаблон для чебокса `resources/views/components/forms/checkbox.blade.php`:
+```bladehtml
+@props(['label', 'name'])
+
+@php
+    $defaults = [
+        'type' => 'checkbox',
+        'id' => $name,
+        'name' => $name,
+        'value' => old($name)
+];
+@endphp
+
+<x-forms.field :$label :$name>
+    <div class="rounded-xl bg-white/10 border border-white/10 px-5 py-4 w-full">
+        <input {{ $attributes($defaults) }}>
+        <span class="pl-1">{{ $label }}</span>
+    </div>
+</x-forms.field>
+```
+139. Реализуем представление добавления вакансии `resources/views/jobs/create.blade.php`:
+```bladehtml
+<x-layout>
+    <x-page-heading>New Job</x-page-heading>
+
+    <x-forms.form method="POST" action="/jobs">
+        <x-forms.input label="Title" name="title" placeholder="CEO"/>
+        <x-forms.input label="Salary" name="salary" placeholder="$90,000 USD"/>
+        <x-forms.input label="Location" name="location" placeholder="Winter Park, Florida"/>
+
+        <x-forms.select label="Schedule" name="schedule">
+            <option>Part Time</option>
+            <option>Full Time</option>
+        </x-forms.select>
+
+        <x-forms.input label="URL" name="url" placeholder="https://acme.com/jobs/ceo-wanted"/>
+        <x-forms.checkbox label="Feature (Costs Extra)" name="featured" />
+
+        <x-forms.divider />
+
+        <x-forms.input label="Tags (comma separated)" name="tags" placeholder="laracasts, video, education"/>
+
+        <x-forms.button>Publish</x-forms.button>
+    </x-forms.form>
+</x-layout>
+```
+140. Реализуем метод store() в контроллере вакансий `app/Http/Controllers/JobController.php`:
+```php
+public function store(Request $request)
+    {
+        $attributes = $request->validate([
+            'title' => ['required'],
+            'salary' => ['required'],
+            'location' => ['required'],
+            'schedule' => ['required', Rule::in(['Part Time', 'Full Time'])],
+            'url' => ['required', 'active_url'],
+            'tags' => ['nullable'],
+        ]);
+
+        $attributes['featured'] = $request->has('featured');
+
+        $job = Auth::user()->employer->jobs()->create(\Arr::except($attributes, 'tags'));
+
+        if ($attributes['tags'] ?? false) {
+            foreach (explode(',', $attributes['tags']) as $tag) {
+                $job->tag($tag);
+            }
+        }
+
+        return redirect('/');
+    }
+```
+141. В шаблонах карточек Title карточки сделаем ссылкой `resources/views/components/job-card.blade.php` и `resources/views/components/job-card-wide.blade.php`:
+```bladehtml
+<a href="{{ $job->url }}" target="_blank">
+    {{ $job->title }}
+</a>
+```
+142. В карточке работодателя уберем заглушки для лого, и добавим реальные `resources/views/components/employer-logo.blade.php`:
+```bladehtml
+@props(['employer','width' => 90])
+
+<img src="{{ asset($employer->logo) }}" alt="" class="rounded-xl" width="{{ $width }}>
+```
+143. Добавим в карточки `resources/views/components/job-card-wide.blade.php`:
+```bladehtml
+<x-employer-logo :employer="$job->employer" />
+```
+144. В карточку `resources/views/components/job-card.blade.php`:
+```bladehtml
+<x-employer-logo :employer="$job->employer" :width="42"/>
+```
+145. `php artisan storage:link` - создает символическую ссылку (symlink) между публичной директорией public/storage и директорией storage/app/public. Это позволяет сделать файлы, хранящиеся в storage/app/public, доступными через веб-интерфейс
+146. В основном макете `resources/views/components/layout.blade.php`, добавим кнопку выхода Log Out:
+```bladehtml
+@auth
+<div class="space-x-6 font-bold flex">
+    <a href="/jobs/create">Post a Job</a>
+
+    <form method="POST" action="/logout">
+        @csrf
+        @method('DELETE')
+
+        <button>Log Out</button>
+    </form>
+</div>
+@endauth
+```
+147. На этом заканчиваем курс.

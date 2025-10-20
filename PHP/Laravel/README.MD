@@ -630,7 +630,7 @@ Guzzle отлично подходит для авторизации и подд
 **Body (Тело запроса)** - опционально
 
 **ПРИМЕР POST запрос с JSON телом:**
-```json
+```
 POST /api/users HTTP/1.1
 Host: api.example.com
 Content-Type: application/json

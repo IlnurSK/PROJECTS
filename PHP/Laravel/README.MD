@@ -1478,3 +1478,84 @@ $obj2->property = 1;   // изменяется исходный объект
 * Composer (автозагрузка PSR-4)
 * Все современные фреймворки (Laravel, Symfony и т.д.)
 * Большинство библиотек на Packagist
+
+## SOLID
+**SOLID** - это принципы объектно-ориентированного проектирования
+
+### Single Responsibility Principle (Принцип единой ответственности)
+**Класс должен иметь только одну причину для изменения.**
+
+Что это значит на практике:
+* Каждый класс решает только одну задачу
+* Изменения в одной бизнес-логике не должны затрагивать другие
+* Код становится более тестируемым и поддерживаемым
+
+**Пример нарушения:**
+```php
+class OrderProcessor {
+    public function process(Order $order) {
+        // Валидация заказа
+        // Расчет стоимости
+        // Сохранение в БД
+        // Отправка email
+        // Генерация PDF-счета
+    }
+}
+```
+
+**Пример соблюдения:**
+```php
+class OrderValidator { /* только валидация */ }
+class PriceCalculator { /* только расчеты */ }
+class OrderRepository { /* только работа с БД */ }
+class EmailService { /* только отправка писем */ }
+```
+
+**Ключевой критерий:** Если вы можете описать работу класса без использования союза **"и"** - он вероятно соблюдает SRP
+
+### Open-Closed Principle (Принцип Открытости/Закрытости)
+**Кассы должны быть:**
+* Открыты для расширения - можно добавлять новое поведение
+* Закрыты для модификации - не изменять существующий код
+
+```php
+// НЕПРАВИЛЬНО - нарушает OCP
+class PaymentProcessor {
+    public function process($paymentType, $amount) {
+        if ($paymentType === 'credit_card') {
+            // обработка карты
+        } elseif ($paymentType === 'paypal') {
+            // обработка PayPal
+        }
+        // Добавление нового типа требует изменения класса!
+    }
+}
+
+// ПРАВИЛЬНО - соблюдает OCP
+interface PaymentMethod {
+    public function process($amount);
+}
+
+class CreditCardPayment implements PaymentMethod {
+    public function process($amount) { /* ... */ }
+}
+
+class PayPalPayment implements PaymentMethod {
+    public function process($amount) { /* ... */ }
+}
+
+class PaymentProcessor {
+    public function process(PaymentMethod $payment, $amount) {
+        $payment->process($amount);
+        // Новый тип платежа - новый класс, этот код не меняется
+    }
+}
+```
+**Ключевые моменты:**
+* OCP достигается через интерфейсы и полиморфизм, а не только наследование
+* Новый функционал добавляется созданием новых классов, а не изменением существующих
+* Это основа многих паттернов (Стратегия, Декоратор и др.)
+
+### Liskov Substitution Principle
+### Interface Segregation Principle
+### Dependency Inversion Principle

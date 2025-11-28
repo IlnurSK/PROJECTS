@@ -138,6 +138,12 @@
   * [PSR (PHP Standard Recommendations)](#psr-php-standard-recommendations)
     * [Основные PSR:](#основные-psr)
       * [PSR-4](#psr-4)
+  * [SOLID](#solid)
+    * [Single Responsibility Principle (Принцип единой ответственности)](#single-responsibility-principle-принцип-единой-ответственности)
+    * [Open-Closed Principle (Принцип Открытости/Закрытости)](#open-closed-principle-принцип-открытостизакрытости)
+    * [Liskov Substitution Principle](#liskov-substitution-principle)
+    * [Interface Segregation Principle](#interface-segregation-principle)
+    * [Dependency Inversion Principle](#dependency-inversion-principle)
 <!-- TOC -->
 
 ## 1) Какие типы данных существуют в PHP?

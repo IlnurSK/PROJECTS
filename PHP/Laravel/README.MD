@@ -144,6 +144,9 @@
     * [Liskov Substitution Principle](#liskov-substitution-principle)
     * [Interface Segregation Principle](#interface-segregation-principle)
     * [Dependency Inversion Principle](#dependency-inversion-principle)
+  * [REST API](#rest-api)
+    * [Хороший REST API:](#хороший-rest-api)
+    * [Плохой REST API:](#плохой-rest-api)
 <!-- TOC -->
 
 ## 1) Какие типы данных существуют в PHP?
@@ -360,9 +363,9 @@ try {
 - 101 Switching Protocols — переключение протоколов (например, на WebSocket).
 
 **2xx: Успех (Success)**
-- 200 OK — всё хорошо, стандартный успешный ответ.
+- 200 OK — всё хорошо, стандартный успешный ответ. (GET, PATCH, DELETE)
 - 201 Created — ресурс успешно создан (часто при POST).
-- 204 No Content — успешно, но без тела ответа (например, при DELETE).
+- 204 No Content — успешно, но без тела ответа (например, при DELETE иногда PUT).
 
 **3xx: Перенаправление (Redirection)**
 - 301 Moved Permanently — постоянный редирект.
@@ -370,14 +373,16 @@ try {
 - 304 Not Modified — ресурс не изменился (используется при кешировании).
 
 **4xx: Ошибка клиента (Client Error)**
-- 400 Bad Request — некорректный запрос.
-- 401 Unauthorized — нужна авторизация.
-- 403 Forbidden — доступ запрещён, даже если авторизован.
+- 400 Bad Request — некорректный запрос. Неправильное тело запроса, невалидные данные, корявая структура JSON
+- 401 Unauthorized — нужна авторизация. Запрос без авторизации или с неправильным токеном.
+- 403 Forbidden — доступ запрещён, даже если авторизован (нет прав)
 - 404 Not Found — ресурс не найден.
-- 422 Unprocessable Entity — сервер понял запрос, но не может обработать (часто в API при валидации).
+- 409 Conflict - ресурс конфликтует с текущим состоянием (например, пытаешься создать пользователя с email, который уже существует)
+- 422 Unprocessable Entity — сервер понял запрос, но не может обработать (Ошибка валидации. JSON синтаксически верный, но поле email пустое или пароль короткий).
+- 429 Too Many Requests - превышен лимит запросов (Rate Limiting).
 
 **5xx: Ошибка сервера (Server Error)**
-- 500 Internal Server Error — общая ошибка.
+- 500 Internal Server Error — общая ошибка сервера (Сервер сдох. Апокалипсис. Логируй и чини.)
 - 502 Bad Gateway — неверный ответ от прокси/шлюза.
 - 503 Service Unavailable — сервис временно недоступен (например, перегрузка).
 - 504 Gateway Timeout — шлюз не дождался ответа.
@@ -1565,3 +1570,231 @@ class PaymentProcessor {
 ### Liskov Substitution Principle
 ### Interface Segregation Principle
 ### Dependency Inversion Principle
+
+## REST API
+**Разница хорошего от плохого примера**
+### Хороший REST API:
+* **Использует правильные HTTP-методы:** GET (чтение), POST (создание), PUT (полное обновление), PATCH (частичное обновление), DELETE (удаление)
+* **Соблюдает идемпотентность:** GET, PUT, DELETE - идемпотентны; POST, PATCH - нет
+* **Возвращает корректные HTTP-статусы:** 200, 201, 400, 401, 404, 422, 500
+* **Имеет согласованную структуру URL:** /api/v1/users, /api/v1/users/{id}
+* **Использует версионирование API**
+
+### Плохой REST API:
+```php
+// ПЛОХО: Использует GET для изменения данных
+GET /api/delete-user?id=1
+
+// ПЛОХО: Всегда возвращает 200, даже при ошибках
+{"status": 200, "error": "User not found"}
+
+// ПЛОХО: Действия в URL вместо использования методов
+POST /api/create-user
+POST /api/update-user
+```
+
+В RESTful API методы HTTP должны быть направлены на ресурсы (сущности), а действия определяются HTTP-методом.
+
+**Правильно:**
+```
+GET    /api/users     - получить список пользователей
+POST   /api/users     - создать пользователя
+GET    /api/users/1   - получить пользователя
+PUT    /api/users/1   - обновить пользователя
+DELETE /api/users/1   - удалить пользователя
+```
+
+**Неправильно:**
+```
+GET /api/get-users
+GET /api/create-user?name=John
+GET /api/delete-user?id=1
+```
+
+## CORS (Cross-Origin Resource Sharing)
+**CORS (Cross-Origin Resource Sharing)** - это механизм безопасности браузера, который контролирует доступ к ресурсам на разных доменах.
+
+### Проблема, которую решает:
+* Браузеры по умолчанию запрещают JavaScript-запросы к API на другом домене (Same-Origin Policy)
+* Это защищает пользователей от атак (например, CSRF)
+* Но это же мешает работе SPA-приложений, где фронтенд и бэкенд на разных доменах
+
+### Как работает CORS:
+1. Браузер отправляет preflight-запрос (OPTIONS) перед основным запросом
+2. Сервер отвечает заголовками, указывающими разрешенные:
+* `Access-Control-Allow-Origin` - разрешенные домены
+* `Access-Control-Allow-Methods` - разрешенные HTTP-методы
+* `Access-Control-Allow-Headers` - разрешенные заголовки
+
+**Пример в Laravel:**
+```php
+// В middleware Cors.php
+return $next($request)
+    ->header('Access-Control-Allow-Origin', 'https://frontend.com')
+    ->header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+    ->header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+```
+
+**Практическое значение:**
+* Без правильной настройки CORS фронтенд не сможет работать с вашим API
+* Нужно явно разрешать только доверенные домены
+* В разработке можно временно разрешать все домены `(*)`, но в production это опасно
+
+## Тестирование
+### Unit (Модульные) тесты
+* **Что тестируем:** Один класс / Один метод в вакууме (сервисы, валидаторы)
+* **Зависимости:** Мокаем **ВСЕ** внешние зависимости (БД, API, другие классы)
+* **БД:** Нет.
+* **Внешние API:** Нет (мокаем)
+* **Цель:** Проверить логику в чистом виде
+* **Инструмент:** `PHPUnit`, `Mockery`.
+* **Пример:** Тестируем калькулятор зарплаты. Нам не нужна база данных, чтобы проверить, что 100 + 20% = 120.
+
+```php
+// Unit-тест сервиса
+public function test_calculate_total()
+{
+    $service = new OrderService();
+    $result = $service->calculateTotal([100, 200]);
+    $this->assertEquals(300, $result);
+}
+```
+
+### Integration (Интеграционные) тесты
+* **Что тестируем:** Взаимодействие 2+ компонентов (Сервис + Репозиторий + БД)
+* **Зависимости:** Мокаем только ВНЕШНИЕ сервисы (платежные шлюзы, почта)
+* **БД:** Да (реальная, но тестовая, SQLite или отдельная MySQL).
+* **Внешние API:** НЕТ! (Мы их подменяем/мокаем).
+* **Цель:** Проверить, что компоненты правильно работают вместе
+* **Инструмент:** `Laravel Feature Tests` (`$this->get('/api/posts')`), `Symfony WebTestCase`.
+
+**Конкретный пример интеграционного теста:**
+**Сервис `PaymentProcessor,` который:**
+* Сохраняет платеж в БД через репозиторий
+* Отправляет запрос во внешний платежный шлюз
+* Обновляет статус заказа
+
+```php
+class PaymentProcessorTest extends TestCase
+{
+    public function test_process_payment()
+    {
+        // Мокаем внешний сервис
+        $gatewayMock = Mockery::mock(PaymentGateway::class);
+        $gatewayMock->shouldReceive('charge')
+            ->once()
+            ->andReturn(['status' => 'success']);
+        
+        // Используем реальную БД (SQLite в памяти)
+        $processor = new PaymentProcessor($gatewayMock);
+        $result = $processor->process(100, 'order_123');
+        
+        $this->assertDatabaseHas('payments', [
+            'order_id' => 'order_123',
+            'status' => 'completed'
+        ]);
+    }
+}
+```
+
+### 3. Feature (Функциональные) тесты
+* **Что тестируем:** Полный пользовательский сценарий
+* **Зависимости:** Мокаем только ВНЕШНИЕ сервисы
+* **БД:** Да (реальная, но тестовая)
+* **Внешние API:** Мокаем
+* **Цель:** Проверить, что фича работает от начала до конца
+
+```php
+class OrderCreationTest extends TestCase
+{
+    use RefreshDatabase; // Используем реальную БД в памяти
+
+    public function test_user_can_create_order()
+    {
+        // 1. Создаем пользователя (реальный, в БД)
+        $user = User::factory()->create();
+        $this->actingAs($user);
+
+        // 2. Мокаем внешний платежный шлюз
+        Http::fake([
+            'payment-gateway.com/*' => Http::response(['transaction_id' => '123'], 200)
+        ]);
+
+        // 3. Выполняем ПОЛНЫЙ HTTP-запрос
+        $response = $this->postJson('/api/orders', [
+            'product_id' => 1,
+            'quantity' => 2
+        ]);
+
+        // 4. Проверяем ВЕСЬ ответ
+        $response->assertStatus(201)
+            ->assertJsonStructure(['id', 'total', 'status', 'transaction_id']);
+
+        // 5. Проверяем побочные эффекты (реальная БД)
+        $this->assertDatabaseCount('orders', 1);
+        $this->assertDatabaseHas('orders', ['status' => 'paid']);
+    }
+}
+```
+### Моки внешних HTTP-запросов:
+Для внешних запросов использовать **Mockery** или встроенные моки **PHPUnit** (Laravel Http Facade fake).
+
+**В Feature тестах (рекомендуется):**
+```php
+// Или в Laravel для HTTP-тестов
+Http::fake([
+    'api.example.com/*' => Http::response(['success' => true], 200)
+]);
+
+// Тестируем контроллер, который делает запрос к api.example.com
+$response = $this->get('/api/some-endpoint');
+```
+**В Integration/Unit тестах (для сервисов):**
+```php
+// Создаем мок HTTP-клиента
+$httpMock = Mockery::mock(ClientInterface::class);
+$httpMock->shouldReceive('post')
+    ->once()
+    ->andReturn(new Response(200, [], 'OK'));
+
+$service = new ExternalApiService($httpMock);
+$result = $service->callApi();
+```
+
+### Практика в Laravel:
+
+**Для Unit тестов:**
+- Наследуем от `Tests\TestCase`
+- Используем моки для ВСЕХ зависимостей
+- НЕ используем фасады БД
+
+**Для Integration тестов:**
+- Наследуем от `Tests\TestCase`
+- Используем реальную БД (`RefreshDatabase` трейт)
+- Мокаем только внешние сервисы
+
+**Для Feature тестов:**
+- Наследуем от `Tests\TestCase`
+- Используем `$this->get()`, `$this->postJson()` и т.д.
+- Тестируем полные HTTP-запросы
+
+**Про инструменты для тестирования API:**
+В Laravel использовать встроенные методы для тестирования API:
+```php
+// Тестирование REST API эндпоинта
+$response = $this->postJson('/api/v1/orders', [
+    'product_id' => 1,
+    'quantity' => 2
+]);
+
+$response->assertStatus(201)
+    ->assertJsonStructure([
+        'id', 'total', 'status'
+    ])
+    ->assertJsonPath('status', 'pending');
+```
+
+### Ключевое правило для запоминания:
+- **Unit** → тестируем один компонент → все зависимости мокаем
+- **Integration** → тестируем взаимодействие нескольких компонентов → реальная БД, но внешние API мокаем
+- **Feature** → тестируем пользовательский сценарий → реальная БД, мокаем внешнее, используем HTTP-запросы

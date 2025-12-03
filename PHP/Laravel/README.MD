@@ -160,6 +160,30 @@
   * [Active Record / Data Mapper](#active-record--data-mapper)
     * [Active Record (Laravel / Eloquent ORM)](#active-record-laravel--eloquent-orm)
     * [Data Mapper (Symfony / Doctrine ORM)](#data-mapper-symfony--doctrine-orm)
+  * [Logger (Логгеры) в PHP](#logger-логгеры-в-php)
+    * [Базовое понятие](#базовое-понятие)
+    * [PSR-3 (стандарт)](#psr-3-стандарт)
+    * [Symfony (Monolog)](#symfony-monolog)
+    * [Laravel (тоже Monolog, но проще)](#laravel-тоже-monolog-но-проще)
+    * [Паттерны в логгерах](#паттерны-в-логгерах)
+  * [Валидация в Laravel vs Symfony](#валидация-в-laravel-vs-symfony)
+    * [LARAVEL: Валидация](#laravel-валидация)
+      * [Основные способы](#основные-способы)
+      * [Правила валидации (часто используемые)](#правила-валидации-часто-используемые)
+      * [Кастомные правила](#кастомные-правила)
+      * [Валидация массивов](#валидация-массивов)
+      * [Условная валидация](#условная-валидация)
+      * [Валидация после нормализации](#валидация-после-нормализации)
+    * [SYMFONY: Валидация](#symfony-валидация)
+      * [Базовые концепции](#базовые-концепции)
+      * [Основные способы валидации](#основные-способы-валидации)
+      * [Процесс валидации](#процесс-валидации)
+      * [Form Request в Symfony (аналог Laravel)](#form-request-в-symfony-аналог-laravel)
+      * [Кастомные валидаторы](#кастомные-валидаторы)
+      * [Группы валидации](#группы-валидации)
+      * [Последовательная валидация](#последовательная-валидация)
+    * [СРАВНЕНИЕ Laravel vs Symfony](#сравнение-laravel-vs-symfony)
+    * [ЧТО ГОВОРИТЬ НА СОБЕСЕДОВАНИИ](#что-говорить-на-собеседовании)
 <!-- TOC -->
 
 ## 1) Какие типы данных существуют в PHP?
@@ -1867,3 +1891,569 @@ $em->flush();
 **Минусы:**
 * кривее порог входа, больше конфигурации
 * код менее «приятен» для простых CRUD-задач
+
+## Logger (Логгеры) в PHP
+### Базовое понятие
+**Логгер** - инструмент для записи событий (логов) в приложении:
+* Ошибки (errors)
+* Предупреждения (warnings)
+* Информационные сообщения (info)
+* Отладка (debug)
+
+### PSR-3 (стандарт)
+Все современные логгеры реализуют интерфейс **PSR-3 (LoggerInterface)**.
+
+**8 уровней логирования:**
+```php
+\Psr\Log\LogLevel::EMERGENCY;   // Чрезвычайная ситуация
+\Psr\Log\LogLevel::ALERT;       // Тревога
+\Psr\Log\LogLevel::CRITICAL;    // Критическая ошибка
+\Psr\Log\LogLevel::ERROR;       // Ошибка
+\Psr\Log\LogLevel::WARNING;     // Предупреждение
+\Psr\Log\LogLevel::NOTICE;      // Уведомление
+\Psr\Log\LogLevel::INFO;        // Информация
+\Psr\Log\LogLevel::DEBUG;       // Отладка
+```
+
+**Базовые методы:**
+```php
+$logger->info('Пользователь залогинился', ['user_id' => 123]);
+$logger->error('Ошибка БД', ['exception' => $e]);
+```
+
+### Symfony (Monolog)
+Symfony использует библиотеку **Monolog** - самый популярный логгер для PHP.
+
+**Конфигурация в Symfony:**
+```yaml
+# config/packages/monolog.yaml
+monolog:
+  channels:
+    - main
+    - database
+  
+  handlers:
+    main:
+      type: stream
+      path: "%kernel.logs_dir%/%kernel.environment%.log"
+      level: debug
+      channels: ["!event"]
+    
+    database:
+      type: stream
+      path: "%kernel.logs_dir%/database.log"
+      level: info
+      channels: ["database"]
+```
+
+**Использование в коде:**
+```php
+use Psr\Log\LoggerInterface;
+
+class SomeService
+{
+    private LoggerInterface $logger;
+    
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+    
+    public function someMethod()
+    {
+        $this->logger->info('Метод выполнен');
+        $this->logger->error('Что-то пошло не так', [
+            'context' => 'дополнительная информация'
+        ]);
+    }
+}
+```
+
+### Laravel (тоже Monolog, но проще)
+Laravel использует тот же **Monolog**, но предоставляет удобный фасад.
+
+**Базовое использование:**
+```php
+use Illuminate\Support\Facades\Log;
+
+Log::emergency($message);
+Log::alert($message);
+Log::critical($message);
+Log::error($message);
+Log::warning($message);
+Log::notice($message);
+Log::info($message);
+Log::debug($message);
+
+// С контекстом
+Log::info('Пользователь зарегистрирован', ['user_id' => $user->id]);
+```
+
+**Конфигурация: config/logging.php**
+```php
+'channels' => [
+    'stack' => [
+        'driver' => 'stack',
+        'channels' => ['single', 'slack'],
+    ],
+    
+    'single' => [
+        'driver' => 'single',
+        'path' => storage_path('logs/laravel.log'),
+        'level' => 'debug',
+    ],
+    
+    'daily' => [
+        'driver' => 'daily',
+        'path' => storage_path('logs/laravel.log'),
+        'level' => 'debug',
+        'days' => 14,
+    ],
+],
+```
+
+### Паттерны в логгерах
+Логгеры используют **Dependency Injection** и **Observer pattern**:
+* Каждый обработчик (**handler**) - наблюдатель
+* Логгер рассылает сообщения всем обработчикам
+
+**Пример обработчиков в Monolog:**
+* StreamHandler - запись в файл
+* RotatingFileHandler - ротация логов
+* SlackHandler - отправка в Slack
+* TelegramBotHandler - отправка в Telegram
+* ElasticsearchHandler - запись в Elasticsearch
+
+## Валидация в Laravel vs Symfony
+### LARAVEL: Валидация
+#### Основные способы
+A) В контроллере (быстрый способ)
+```php
+use Illuminate\Http\Request;
+
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'title' => 'required|string|max:255',
+        'email' => 'required|email|unique:users',
+        'age' => 'nullable|integer|min:18',
+        'avatar' => 'image|mimes:jpg,png|max:2048',
+    ]);
+    
+    // $validated содержит только проверенные данные
+}
+```
+
+B) Form Request (рекомендуемый способ)
+```php
+// 1. Создаем Form Request
+php artisan make:request StoreUserRequest
+
+// 2. Редактируем app/Http/Requests/StoreUserRequest.php
+class StoreUserRequest extends FormRequest
+{
+    public function authorize()
+    {
+        return true; // или проверка прав
+    }
+    
+    public function rules()
+    {
+        return [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:8',
+            'role' => 'sometimes|in:admin,user,moderator',
+            'avatar' => 'nullable|image|max:2048',
+            'birth_date' => 'date|before:today',
+        ];
+    }
+    
+    public function messages()
+    {
+        return [
+            'name.required' => 'Поле имени обязательно',
+            'email.unique' => 'Этот email уже занят',
+        ];
+    }
+    
+    public function attributes()
+    {
+        return [
+            'email' => 'электронная почта',
+            'password' => 'пароль',
+        ];
+    }
+}
+
+// 3. Используем в контроллере
+public function store(StoreUserRequest $request)
+{
+    // Данные уже валидированы!
+    $validated = $request->validated();
+    
+    // Или получить конкретное поле
+    $name = $request->input('name');
+}
+```
+C) Валидатор вручную
+```php
+use Illuminate\Support\Facades\Validator;
+
+$validator = Validator::make($request->all(), [
+    'email' => 'required|email',
+    'password' => 'required|min:8',
+]);
+
+if ($validator->fails()) {
+    // Перенаправление с ошибками
+    return redirect()->back()
+        ->withErrors($validator)
+        ->withInput();
+    
+    // Или JSON-ответ для API
+    return response()->json([
+        'errors' => $validator->errors()
+    ], 422);
+}
+
+$validated = $validator->validated();
+```
+#### Правила валидации (часто используемые)
+```php
+'field' => [
+    // Обязательность
+    'required', 'sometimes', 'nullable',
+    
+    // Типы данных
+    'string', 'integer', 'numeric', 'boolean', 'array', 'file', 'image',
+    
+    // Форматы
+    'email', 'url', 'ip', 'uuid', 'date', 'date_format:Y-m-d',
+    
+    // Длина
+    'min:3', 'max:255', 'size:10', 'between:3,255',
+    
+    // Числовые
+    'digits:10', 'digits_between:5,10', 'gt:10', 'lt:100',
+    
+    // Строковые
+    'alpha', 'alpha_dash', 'alpha_num', 'starts_with:admin',
+    'ends_with:.com', 'contains:example',
+    
+    // Уникальность
+    'unique:users,email', // для создания
+    'unique:users,email,' . $user->id, // для обновления
+    
+    // Существование
+    'exists:users,id',
+    
+    // Пароли
+    'confirmed', // требует поле password_confirmation
+    'current_password', // проверяет текущий пароль пользователя
+    
+    // Файлы
+    'mimes:jpg,png,pdf', 'mimetypes:text/plain',
+    'max:1024', // в килобайтах для файлов
+],
+```
+
+#### Кастомные правила
+A) Rule объекты
+```php
+// Создаем правило
+php artisan make:rule Uppercase
+
+// app/Rules/Uppercase.php
+class Uppercase implements Rule
+{
+    public function passes($attribute, $value)
+    {
+        return strtoupper($value) === $value;
+    }
+    
+    public function message()
+    {
+        return 'Поле :attribute должно быть в верхнем регистре';
+    }
+}
+
+// Используем
+'name' => ['required', new Uppercase],
+```
+
+B) Closure-правила
+```php
+'email' => [
+    'required',
+    function ($attribute, $value, $fail) {
+        if (!str_ends_with($value, '@company.com')) {
+            $fail('Почта должна быть корпоративной (@company.com)');
+        }
+    },
+],
+```
+
+C) Implicit правила (запускаются даже для пустых полей)
+```php
+class ForbiddenWords implements ImplicitRule
+{
+    public function passes($attribute, $value)
+    {
+        return !in_array($value, ['spam', 'bad']);
+    }
+}
+```
+#### Валидация массивов
+```php
+$rules = [
+    'users.*.email' => 'required|email',
+    'users.*.age' => 'required|integer|min:18',
+    'tags' => 'array',
+    'tags.*' => 'string|distinct|max:10',
+];
+```
+
+#### Условная валидация
+```php
+// 1. sometimes()
+$validator = Validator::make($data, [
+    'email' => 'sometimes|required|email',
+]);
+
+// 2. Условные правила
+$validator->sometimes('reason', 'required|max:500', function ($input) {
+    return $input->status === 'rejected';
+});
+
+// 3. В Form Request
+public function rules()
+{
+    return [
+        'email' => Rule::requiredIf(function () {
+            return $this->registration_method === 'email';
+        }),
+    ];
+}
+```
+#### Валидация после нормализации
+```php
+// Подготовка данных перед валидацией
+public function withValidator($validator)
+{
+    $validator->after(function ($validator) {
+        if ($this->somethingElseIsInvalid()) {
+            $validator->errors()->add('field', 'Что-то не так');
+        }
+    });
+    
+    // Нормализация
+    $validator->setData(array_merge($validator->getData(), [
+        'email' => strtolower($this->email),
+    ]));
+}
+```
+
+### SYMFONY: Валидация
+#### Базовые концепции
+В Symfony валидация отделена от форм и используется через компонент `symfony/validator:`
+```php
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints as Assert;
+```
+#### Основные способы валидации
+A) Аннотации (Attributes в PHP 8+)
+```php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class User
+{
+    #[Assert\NotBlank(message: "Имя не может быть пустым")]
+    #[Assert\Length(min: 2, max: 50)]
+    private string $name;
+    
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    private string $email;
+    
+    #[Assert\Range(min: 18, max: 120)]
+    private int $age;
+    
+    #[Assert\Choice(['male', 'female', 'other'])]
+    private string $gender;
+    
+    #[Assert\Valid] // Для вложенных объектов
+    private Address $address;
+}
+```
+B) YAML конфигурация
+```yaml
+# config/validator/validation.yaml
+App\Entity\Product:
+  properties:
+    name:
+      - NotBlank:
+          message: 'Название обязательно'
+      - Length:
+          min: 3
+          minMessage: 'Минимум 3 символа'
+          max: 100
+          maxMessage: 'Максимум 100 символов'
+    price:
+      - NotBlank: ~
+      - Type:
+          type: float
+      - Positive: ~
+```
+C) PHP конфигурация
+```php
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+
+class User
+{
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+        $metadata->addPropertyConstraint('name', new Assert\NotBlank());
+        $metadata->addPropertyConstraint('name', new Assert\Length([
+            'min' => 2,
+            'max' => 50
+        ]));
+    }
+}
+```
+#### Процесс валидации
+```php
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+
+class UserController
+{
+    // 1. Внедрение валидатора через DI
+    public function __construct(private ValidatorInterface $validator) {}
+    
+    public function create(Request $request)
+    {
+        $user = new User();
+        $user->setName($request->get('name'));
+        $user->setEmail($request->get('email'));
+        
+        // 2. Валидация объекта
+        $violations = $this->validator->validate($user);
+        
+        // 3. Обработка ошибок
+        if (count($violations) > 0) {
+            foreach ($violations as $violation) {
+                echo $violation->getPropertyPath() . ': ' . $violation->getMessage();
+                // Пример: name: Это значение не должно быть пустым
+            }
+        }
+        
+        // 4. Валидация отдельных значений
+        $emailViolations = $this->validator->validateValue(
+            $request->get('email'),
+            new Assert\Email()
+        );
+    }
+}
+```
+#### Form Request в Symfony (аналог Laravel)
+В Symfony это делается через DTO + валидацию:
+```php
+// 1. Создаем DTO
+class CreateUserRequest
+{
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 50)]
+    public string $name;
+    
+    #[Assert\NotBlank]
+    #[Assert\Email]
+    public string $email;
+}
+
+// 2. Используем в контроллере
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
+
+class UserController
+{
+    #[Route('/users', methods: ['POST'])]
+    public function create(
+        #[MapRequestPayload] CreateUserRequest $request
+    ) {
+        // $request уже провалидирован автоматически
+        // Если есть ошибки - вернется 422 Unprocessable Entity
+    }
+}
+```
+#### Кастомные валидаторы
+```php
+// 1. Создаем Constraint
+#[Attribute]
+class ContainsAdmin extends Constraint
+{
+    public string $message = 'Строка "{{ string }}" не содержит слово "admin"';
+}
+
+// 2. Создаем Validator
+class ContainsAdminValidator extends ConstraintValidator
+{
+    public function validate($value, Constraint $constraint)
+    {
+        if (null === $value || '' === $value) {
+            return;
+        }
+        
+        if (!str_contains($value, 'admin')) {
+            $this->context->buildViolation($constraint->message)
+                ->setParameter('{{ string }}', $value)
+                ->addViolation();
+        }
+    }
+}
+
+// 3. Используем
+class User
+{
+    #[ContainsAdmin]
+    private string $username;
+}
+```
+#### Группы валидации
+```php
+// Определение групп
+#[Assert\NotBlank(groups: ['create'])]
+#[Assert\Length(min: 8, groups: ['create', 'update'])]
+private string $password;
+
+// Использование
+$violations = $validator->validate($user, null, ['create', 'custom_group']);
+```
+#### Последовательная валидация
+```php
+#[Assert\Sequentially([
+    new Assert\NotBlank(),
+    new Assert\Length(min: 10),
+    new Assert\Regex('/^\d+$/'),
+])]
+private string $phone;
+```
+### СРАВНЕНИЕ Laravel vs Symfony
+| **Аспект**         | **Laravel**                                     | **Symfony**                           |
+|--------------------|-------------------------------------------------|---------------------------------------|
+| Основной подход    | Form Request + строковые правила                | Компонент Validator + аннотации       |
+| Конфигурация       | Массивы в PHP                                   | Аннотации, YAML, XML, PHP             |
+| Кастомные правила  | Rule объекты, Closure                           | Constraint + Validator классы         |
+| Внедрение          | Form Request (DI), Validator фасад              | ValidatorInterface (DI)               |
+| Ошибки             | `$validator->errors()` или `$request->errors()` | `ConstraintViolationList`             |
+| Условная валидация | `sometimes()`, `Rule::requiredIf()`             | Группы валидации, Callback constraint |
+| Валидация объектов | Неявная (массивы данных)                        | Явная (валидация объектов)            |
+| Производительность | Быстрее для простых случаев                     | Мощнее для сложных сценариев          |
+
+### ЧТО ГОВОРИТЬ НА СОБЕСЕДОВАНИИ
+**Про Laravel:**
+"В Laravel есть несколько подходов: быстрая валидация в контроллерах через validate(), более структурированный через Form Request, и ручной через Validator фасад. Form Request позволяет выносить логику валидации, авторизации и кастомных сообщений в отдельные классы. Правила можно задавать как строки, так и через Rule объекты."
+
+**Про Symfony:**
+"Symfony использует компонентный подход. Валидация через Constraint'ы, которые можно настраивать через аннотации, YAML или PHP. Основной интерфейс - ValidatorInterface, который внедряется через DI. Есть продвинутые возможности: группы валидации, последовательная проверка, кастомные constraints."
+
+**При сравнении:**
+"Laravel ориентирован на практичность и скорость разработки - простые строковые правила, удобная работа с формами. Symfony дает больше контроля и гибкости - можно валидировать любые объекты, сложные связи между полями, использовать разные форматы конфигурации."

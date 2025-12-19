@@ -227,6 +227,21 @@
     * [Практические примеры](#практические-примеры)
     * [Когда НЕ использовать хинты](#когда-не-использовать-хинты)
     * [Резюме](#резюме-3)
+  * [Event Loop и жизненный цикл JavaScript](#event-loop-и-жизненный-цикл-javascript)
+    * [Базовая модель (как устроен Event Loop)](#базовая-модель-как-устроен-event-loop)
+    * [Ключевые термины](#ключевые-термины)
+    * [Пример](#пример)
+    * [Резюме](#резюме-4)
+  * [Браузерные API](#браузерные-api)
+    * [Media API (Video/Audio)](#media-api-videoaudio)
+    * [Storage API (Хранение данных)](#storage-api-хранение-данных)
+    * [Network API (Сеть)](#network-api-сеть)
+    * [Резюме](#резюме-5)
+  * [Аутентификация /Авторизация (Authentication / Authorization)](#аутентификация-авторизация-authentication--authorization)
+    * [Stateful (с состоянием) — Session-based Authentication](#stateful-с-состоянием--session-based-authentication)
+    * [Stateless (без состояния) — Token-based Authentication](#stateless-без-состояния--token-based-authentication)
+    * [OAuth 2.0 / OpenID Connect (стандарт для делегирования доступа)](#oauth-20--openid-connect-стандарт-для-делегирования-доступа)
+    * [Резюме](#резюме-6)
 <!-- TOC -->
 
 ## 1) Какие типы данных существуют в PHP?
